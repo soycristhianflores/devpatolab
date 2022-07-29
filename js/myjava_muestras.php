@@ -11,10 +11,6 @@ $('#form_main #bs_regis').on('keyup',function(){
   pagination(1);
 });
 
-$('#form_main #tipo_paciente_grupo').on('change',function(){
-  pagination(1);
-});
-
 $('#form_main #pacientesIDGrupo').on('change',function(){
   pagination(1);
 });
@@ -30,11 +26,7 @@ $(document).ready(function(){
 
 	empresa();
 	puesto();
-	getEstatus();	
-		  
-    $("#modal_muestras").on('shown.bs.modal', function(){
-        $(this).find('#formularioMuestras #paciente_consulta').focus();
-    });
+	getEstatus();
 
     $("#modal_busqueda_colaboradores").on('shown.bs.modal', function(){
         $(this).find('#formulario_busqueda_coloboradores #buscar').focus();
@@ -123,6 +115,9 @@ function agregarMuestras(){
 		$('#formularioMuestras #buscar_remitentes_muestras').show();
 		$('#formularioMuestras #buscar_hospital_clinica').show();
 
+		$('#formularioMuestras #empresa').hide();
+		$('#formularioMuestras #paciente').hide();
+
 		//HABILITAR OBJETOS
 		$('#formularioMuestras #paciente_consulta').attr("disabled", false);
  		$('#formularioMuestras #fecha').attr("readonly", false);
@@ -162,7 +157,7 @@ function agregarMuestras(){
 function editarRegistro(pacientes_id, muestras_id){
 	var url = '<?php echo SERVERURL; ?>php/muestras/editarMuestras.php';
 	$('#formularioMuestras')[0].reset();
-	$('#formularioMuestras #pacientes_id').val(pacientes_id);
+	$('#formularioMuestras #pacientes_empresa_id').val(pacientes_id);
 	$('#formularioMuestras #muestras_id').val(muestras_id);
 
 	$.ajax({
@@ -175,9 +170,9 @@ function editarRegistro(pacientes_id, muestras_id){
 			$('#formularioMuestras').attr({ 'action': '<?php echo SERVERURL; ?>php/muestras/modificarMuestras.php' });
 			$('#reg_muestras').hide();
 			$('#edi_muestras').show();
-			$('#delete_muestras').hide();
-			$('#formularioMuestras #paciente_consulta').val(valores[0]);
-			$('#formularioMuestras #fecha').val(valores[1]);
+			$('#delete_muestras').hide();	
+			$('#formularioMuestras #empresa').val(valores[0]);
+			$('#formularioMuestras #paciente').val(valores[1]);
 			$('#formularioMuestras #diagonostico_muestra').val(valores[2]);
 			$('#formularioMuestras #material_muestra').val(valores[3]);
 			$('#formularioMuestras #datos_relevantes_muestras').val(valores[4]);
@@ -186,15 +181,38 @@ function editarRegistro(pacientes_id, muestras_id){
 			$('#formularioMuestras #servicio_muestras').val(valores[8]);
 			$('#formularioMuestras #sitio_muestra').val(valores[9]);
 			$('#formularioMuestras #tipo_muestra_id').val(valores[10]);
-			$('#formularioMuestras #paciente_muestras').val(valores[11]);
-			$('#formularioMuestras #categoria_muestras').val(valores[12]);
+			$('#formularioMuestras #categoria_muestras').val(valores[11]);
+			$('#formularioMuestras #tipo_paciente_muestra').val(valores[12]);
 
-		    if(getTipoPaciente($('#formularioMuestras #paciente_consulta').val()) == 2){
-			   $('#formularioMuestras #pacientes_muestra_grupo').show();
+		    if(getTipoPaciente(pacientes_id) == 2){
+			   $('#formularioMuestras #cliente_muestra_grupo').show();
+			   $('#formularioMuestras #pacientes_muestra_grupo').show();			   
 			   $('#formularioMuestras #servicios_muestra_grupo').hide();
+
+			   $('#formularioMuestras #empresa').show();
+			   $('#formularioMuestras #paciente').show();
+
+			   $('#formularioMuestras #paciente_consulta').hide();
+			   $('#formularioMuestras #paciente_muestras').hide();
+			   
+			   $('#formularioMuestras #tipo_paciente_muestra').attr("disabled", true);
+			   $('#formularioMuestras #empresa').attr("disabled", true);
+			   $('#formularioMuestras #paciente').attr("disabled", true);
+			   $('#formularioMuestras #pacientes_id').val(valores[13]);
 		    }else{
-			   $('#formularioMuestras #pacientes_muestra_grupo').hide();
-			   $('#formularioMuestras #servicios_muestra_grupo').show();
+			   $('#formularioMuestras #cliente_muestra_grupo').hide();
+			   $('#formularioMuestras #pacientes_muestra_grupo').show();
+			   $('#formularioMuestras #servicios_muestra_grupo').show();		   
+
+			   $('#formularioMuestras #empresa').hide();
+			   $('#formularioMuestras #paciente').show();
+
+			   $('#formularioMuestras #paciente_consulta').hide();
+			   $('#formularioMuestras #paciente_muestras').hide();
+
+			   $('#formularioMuestras #tipo_paciente_muestra').attr("disabled", true);
+			   $('#formularioMuestras #empresa').attr("disabled", true);
+			   $('#formularioMuestras #paciente').attr("disabled", true);			   
 		    }
 
 			if(valores[5] == 1){
@@ -211,7 +229,6 @@ function editarRegistro(pacientes_id, muestras_id){
 			$('#formularioMuestras #buscar_hospital_clinica').hide();
 
 			//HABILITAR OBJETOS
-			$('#formularioMuestras #fecha').attr("readonly", false);
 			$('#formularioMuestras #diagonostico_muestra').attr("readonly", false);
 			$('#formularioMuestras #material_muestra').attr("readonly", false);
 			$('#formularioMuestras #datos_relevantes_muestras').attr("readonly", false);
@@ -226,8 +243,7 @@ function editarRegistro(pacientes_id, muestras_id){
 			$('#formularioMuestras #paciente_muestras').attr("disabled", false);
 
 			//DESHABILITAR OBJETOS
-			$('#formularioMuestras #fecha').attr("readonly", true);
-			$('#formularioMuestras #paciente_consulta').attr("disabled", true);
+			$('#formularioMuestras #paciente_consulta').attr("disabled", false);
 			$('#formularioMuestras #tipo_muestra_id').attr("disabled", true);
 			$('#formularioMuestras #categoria_muestras').attr("disabled", true);
 
@@ -984,6 +1000,21 @@ $(document).ready(function() {
 function getPacientes(){
     var url = '<?php echo SERVERURL; ?>php/muestras/getPacientes.php';
 	var tipo_paciente = $("#formularioMuestras #tipo_paciente_muestra").val();
+
+	$.ajax({
+        type: "POST",
+        url: url,
+	    async: true,
+		data:'tipo_paciente='+tipo_paciente,
+        success: function(data){
+		    $('#formularioMuestras #paciente_consulta').html("");
+			$('#formularioMuestras #paciente_consulta').html(data);
+        }
+     });
+}
+
+function getPacientesEditar(tipo_paciente){
+    var url = '<?php echo SERVERURL; ?>php/muestras/getPacientes.php';
 
 	$.ajax({
         type: "POST",

@@ -6,10 +6,9 @@ include "../funtions.php";
 $mysqli = connect_mysqli();
 
 $usuario = $_SESSION['colaborador_id'];
-$pacientes_id = $_POST['pacientes_id'];
+$muestras_id = $_POST['muestras_id'];
 $servicio_id = $_POST['servicio_muestras'];
 $hospital_clinica = $_POST['hospital_clinica'];
-$muestras_id = $_POST['muestras_id'];
 $colaborador_id = $_POST['remitente'];
 $fecha = date("Y-m-d");
 $sitio_muestra = cleanStringStrtolower($_POST['sitio_muestra']);
@@ -52,22 +51,7 @@ $update = "UPDATE muestras
 	WHERE muestras_id = '$muestras_id'";
 $query = $mysqli->query($update) or die($mysqli->error);
 
-if($query){
-	//CONSULTAMOS SI EXISTE LA MUESTRA EN muestras_hospitales
-	$get_muestra = "SELECT muestras_hospitales_id
-		FROM muestras_hospitales
-		WHERE muestras_id = '$muestras_id'";
-	$result_get_muestra = $mysqli->query($get_muestra) or die($mysqli->error);
-
-	if($result_get_muestra->num_rows>0){
-		//ACTUALIZAMOS EL PACIENTE EN LA MUESTRA HOSPITALES
-		$udate_muestras_hospital = "UPDATE muestras_hospitales
-			SET
-				pacientes_id = '$paciente_muestras'
-			WHERE muestras_id = '$muestras_id'";
-		$mysqli->query($udate_muestras_hospital) or die($mysqli->error);
-	}	
-			
+if($query){			
 	$datos = array(
 		0 => "Editado", 
 		1 => "Registro Editado Correctamente", 

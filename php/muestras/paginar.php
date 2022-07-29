@@ -14,21 +14,13 @@ $tipo_paciente_grupo = $_POST['tipo_paciente_grupo'];
 $pacientesIDGrupo = $_POST['pacientesIDGrupo'];
 $tipo_muestra = $_POST['tipo_muestra'];
 $estado = 0;
-	
-//$where = "WHERE m.fecha BETWEEN '$fechai' AND '$fechaf' AND m.estado = '0' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";
 
-if($tipo_paciente_grupo == "" && $pacientesIDGrupo == "" && $tipo_muestra == ""){
+if($pacientesIDGrupo == "" && $tipo_muestra == ""){
 	$where = "WHERE m.fecha BETWEEN '$fechai' AND '$fechaf' AND m.estado = '$estado' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";	
-}else if($tipo_paciente_grupo != "" && $pacientesIDGrupo == "" && $tipo_muestra == ""){
-	$where = "WHERE p.tipo_paciente_id = '$tipo_paciente_grupo' AND m.estado = '$estado' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";	
-}else if($tipo_paciente_grupo != "" && $pacientesIDGrupo != "" && $tipo_muestra == ""){
-	$where = "WHERE p.tipo_paciente_id = '$tipo_paciente_grupo' AND p.pacientes_id = '$pacientesIDGrupo' AND m.estado = '$estado' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";	
-}else if($tipo_paciente_grupo != "" && $pacientesIDGrupo != "" && $tipo_muestra != ""){
-	$where = "WHERE p.tipo_paciente_id = '$tipo_paciente_grupo' AND p.pacientes_id = '$pacientesIDGrupo' AND m.estado = '$estado' AND m.tipo_muestra_id = '$tipo_muestra' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";	
-}if($tipo_paciente_grupo == "" && $pacientesIDGrupo == "" && $tipo_muestra != ""){
-	$where = "WHERE m.fecha BETWEEN '$fechai' AND '$fechaf' AND m.estado = '$estado' AND m.tipo_muestra_id = '$tipo_muestra' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";	
-}else{
-	$where = "WHERE m.estado = '$estado' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";
+}else if($pacientesIDGrupo != "" && $tipo_muestra == ""){
+	$where = "WHERE m.pacientes_id = '$pacientesIDGrupo' AND m.estado = '$estado' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";
+}else if($pacientesIDGrupo != "" && $tipo_muestra != ""){
+	$where = "WHERE m.pacientes_id = '$pacientesIDGrupo' AND m.fecha BETWEEN '$fechai' AND '$fechaf' AND m.estado = '$estado' AND m.tipo_muestra_id = '$tipo_muestra' AND (p.expediente LIKE '%$dato%' OR CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.identidad LIKE '$dato%' OR p.apellido LIKE '$dato%' OR m.number LIKE '$dato%')";	
 }
 
 $query = "SELECT p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre, ' ', p.apellido) AS paciente, m.fecha AS 'fecha', m.diagnostico_clinico AS 'diagnostico_clinico', m.material_eviando As 'material_eviando', m.datos_clinico As 'datos_clinico',
@@ -38,7 +30,6 @@ $query = "SELECT p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre, ' ', p.apell
 	ON m.pacientes_id = p.pacientes_id
 	".$where."
 	ORDER BY m.fecha DESC";	
-
 $result = $mysqli->query($query) or die($mysqli->error);
 
 $nroLotes = 30;
@@ -117,7 +108,7 @@ while($registro2 = $result->fetch_assoc()){
 	if($pacientes_id_cliente == ""){
 		$empresa = '<a style="text-decoration:none;" href="javascript:showModalhistoriaMuestrasEmpresas('.$registro2['pacientes_id'].');void(0);">'.$registro2['paciente'].'</a>';
 	}else{
-	$empresa = '<a style="text-decoration:none;" href="javascript:showModalhistoriaMuestrasEmpresas('.$registro2['pacientes_id'].');void(0);">'.$registro2['paciente'].'</a><b> Paciente: </b><a style="text-decoration:none;" href="javascript:showModalhistoriaMuestrasPacientes('.$pacientes_id_cliente_codigo.');void(0);">'.$pacientes_id_cliente.')</a>';
+	$empresa = '<a style="text-decoration:none;" href="javascript:showModalhistoriaMuestrasEmpresas('.$registro2['pacientes_id'].');void(0);">'.$registro2['paciente'].'</a><b> Paciente: </b><a style="text-decoration:none;" href="javascript:showModalhistoriaMuestrasPacientes('.$pacientes_id_cliente_codigo.');void(0);">('.$pacientes_id_cliente.')</a>';
 	}
 
 	//CONSULTAMOS SI LA MUESTRA ESTA EN LA Factura

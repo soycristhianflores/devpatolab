@@ -78,7 +78,8 @@ $mysqli->close();//CERRAR CONEXIÓN
 			<form class="FormularioAjax" id="formularioMuestras" data-async data-target="#rating-modal" action="" method="POST" data-form="" autocomplete="off" enctype="multipart/form-data">			
 				<div class="form-row">
 					<div class="col-md-12 mb-3">
-					   <input type="hidden" id="pacientes_id" name="pacientes_id" class="form-control"/>
+					   <input type="hidden" id="pacientes_empresa_id" name="pacientes_empresa_id" class="form-control"/>
+					   <input type="hidden" id="pacientes_id" name="pacientes_id" class="form-control" />
 					   <input type="hidden" id="muestras_id" name="muestras_id" class="form-control"/>	
 						<div class="input-group mb-3">
 							<input type="text" required readonly id="pro" name="pro" class="form-control"/>
@@ -91,25 +92,27 @@ $mysqli->close();//CERRAR CONEXIÓN
 				<div class="form-row">
 					<div class="col-md-2 mb-3">
 						<label for="tipo_paciente_muestra">Tipo <span class="priority">*<span/></label>
-						<select id="tipo_paciente_muestra" name="tipo_paciente_muestra" class="custom-select" data-toggle="tooltip" data-placement="top" title="Tipo Paciente" required>
-						<option value="">Seleccione</option>
-						</select>							   
+						<select id="tipo_paciente_muestra" name="tipo_paciente_muestra" class="custom-select" data-toggle="tooltip" data-placement="top" title="Tipo Paciente">
+							<option value="">Seleccione</option>
+						</select>																			   
 					</div>
 					<div class="col-md-5 mb-3" id="cliente_muestra_grupo">
-					  <label for="expedoente">Cliente <span class="priority">*<span/></label>
+					  <label for="paciente_consulta">Empresa <span class="priority">*<span/></label>
 					  <div class="input-group mb-3">
-						  <select id="paciente_consulta" name="paciente_consulta" class="custom-select" data-toggle="tooltip" data-placement="top" title="Pacientes" required>
+						  <select id="paciente_consulta" name="paciente_consulta" class="custom-select" data-toggle="tooltip" data-placement="top" title="Empresas">
 							<option value="">Seleccione</option>
 						  </select>
+						  <input type="text" name="empresa" id="empresa" class="form-control">	
 						  <div class="input-group-append" id="buscar_paciente_consulta_muestras">				
 							<a data-toggle="modal" href="#" class="btn btn-outline-success"><div class="sb-nav-link-icon"></div><i class="fas fa-search fa-lg"></i></a>
 						  </div>
-					   </div>							   
+					   </div>						   
 					</div>
 					<div class="col-md-5 mb-3" style="display:none" id="pacientes_muestra_grupo">
-						<label>Paciente</label>
+						<label>Paciente <span class="priority">*<span/></label>
 						<div class="input-group mb-3">
 						  <select id="paciente_muestras" name="paciente_muestras" class="custom-select" data-toggle="tooltip" data-placement="top" title="Paciente"></select>
+						  <input type="text" name="paciente" id="paciente" class="form-control">
 						  <div class="input-group-append" id="buscar_paciente_muestras">				
 							<a data-toggle="modal" href="#" class="btn btn-outline-success"><div class="sb-nav-link-icon"></div><i class="fas fa-search fa-lg"></i></a>
 						  </div>

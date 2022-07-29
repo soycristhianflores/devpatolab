@@ -7,15 +7,19 @@ $mysqli = connect_mysqli();
 
 $muestras_id  = $_POST['muestras_id'];
 
-$query = "SELECT p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre, ' ', p.apellido) As 'paciente', m.fecha AS 'fecha', m.diagnostico_clinico AS 'diagnostico_clinico', m.material_eviando As 'material_eviando', m.datos_clinico As 'datos_clinico',
-(CASE WHEN m.estado = '1' THEN 'Atendido' ELSE 'Pendiente' END) AS 'estatus', m.muestras_id  As 'muestras_id', m.mostrar_datos_clinicos As 'mostrar_datos_clinicos', m.colaborador_id AS 'remitente', m.hospitales_id AS 'hospitales_id', m.servicio_id AS 'servicio_id', m.colaborador_id AS 'colaborador_id', m.sitio_muestra AS 'sitio_muestra', m.tipo_muestra_id AS 'tipo_muestra_id', m.categoria_id AS 'categoria_id'
+$query = "SELECT m.pacientes_id AS 'paciente_consulta', mh.pacientes_empresa_id AS 'empresa', mh.pacientes_id AS 'pacientes_id', m.fecha AS 'fecha', m.diagnostico_clinico AS 'diagnostico_clinico', m.material_eviando As 'material_eviando', m.datos_clinico As 'datos_clinico', (CASE WHEN m.estado = '1' THEN 'Atendido' ELSE 'Pendiente' END) AS 'estatus', m.muestras_id  As 'muestras_id', m.mostrar_datos_clinicos As 'mostrar_datos_clinicos', m.colaborador_id AS 'remitente', m.hospitales_id AS 'hospitales_id', m.servicio_id AS 'servicio_id', m.colaborador_id AS 'colaborador_id', m.sitio_muestra AS 'sitio_muestra', m.tipo_muestra_id AS 'tipo_muestra_id', m.categoria_id AS 'categoria_id', CONCAT(p.nombre, ' ', p.apellido) AS 'empresa', CONCAT(p1.nombre, ' ', p1.apellido) AS 'paciente', p.tipo_paciente_id AS 'tipo_paciente_id', mh.pacientes_id AS 'muestra_paciente_id'
 	FROM muestras AS m
+	LEFT JOIN muestras_hospitales AS mh
+	ON m.muestras_id = mh.muestras_id
 	INNER JOIN pacientes AS p
 	ON m.pacientes_id = p.pacientes_id
-	WHERE muestras_id = '$muestras_id'";
+	LEFT JOIN pacientes AS p1
+	ON mh.pacientes_id = p1.pacientes_id
+	WHERE m.muestras_id = '$muestras_id'";
 $result = $mysqli->query($query) or die($mysqli->error);
 
-$paciente_consulta = "";
+$paciente = "";
+$paciente_empresa = "";
 $fecha = "";
 $diagonostico_muestra = "";
 $material_muestra = "";
@@ -27,12 +31,22 @@ $servicio_id = "";
 $sitio_muestra = "";
 $tipo_muestra_id = "";
 $categoria_id = "";
+$tipo_paciente_id = "";
+$muestra_paciente_id = "";
 
 if($result->num_rows>=0){	
 	$valores2 = $result->fetch_assoc();
 
-	$paciente_consulta = $valores2['pacientes_id'];
-	$fecha = $valores2['fecha'];
+	$paciente_consulta = $valores2['paciente_consulta'];
+
+	if($valores2['paciente'] == "" || $valores2['paciente'] == null){
+		$paciente_empresa = "";//LA MUESTRA PERTENECE A UN PACIENTE Y NO HAY EMPRESA
+		$paciente = $valores2['empresa'];
+	}else{
+		$paciente_empresa = $valores2['empresa'];//LA MUESTRA PERTENECE A UNA EMPRESA
+		$paciente = $valores2['paciente'];//MOSTRAMOS EL PACIENTE
+	}
+
 	$diagonostico_muestra = $valores2['diagnostico_clinico'];
 	$material_muestra = $valores2['material_eviando'];
 	$datos_relevantes_muestras = $valores2['datos_clinico'];
@@ -42,29 +56,14 @@ if($result->num_rows>=0){
 	$servicio_id = $valores2['servicio_id'];	
 	$sitio_muestra = $valores2['sitio_muestra'];
 	$tipo_muestra_id = $valores2['tipo_muestra_id'];	
-	$categoria_id  = $valores2['categoria_id'];		
-}
-
-//CONSULTAR EL PACIENTE SI ES ENVIADO POR UNA EMPRESA O CLINICA
-$query_paciente = "SELECT p.pacientes_id, CONCAT(p.nombre, ' ', p.apellido) As 'paciente'
-	FROM muestras_hospitales AS mh
-	INNER JOIN pacientes AS p
-	ON mh.pacientes_id = p.pacientes_id
-	WHERE mh.muestras_id = '$muestras_id'";
-$result_paciente = $mysqli->query($query_paciente) or die($mysqli->error);
-
-$pacientes_id_cliente_codigo = "";
-$pacientes_id_cliente = "";
-
-if($result_paciente->num_rows>0){	
-	$valores_paciente = $result_paciente->fetch_assoc();
-	$pacientes_id_cliente_codigo = $valores_paciente['pacientes_id'];
-	$pacientes_id_cliente = $valores_paciente['paciente'];	
+	$categoria_id = $valores2['categoria_id'];	
+	$tipo_paciente_id = $valores2['tipo_paciente_id'];	
+	$muestra_paciente_id = $valores2['muestra_paciente_id'];		
 }
 
 $datos = array(
-	0 => $paciente_consulta,
-	1 => $fecha,
+	0 => $paciente_empresa,
+	1 => $paciente,
 	2 => $diagonostico_muestra,
 	3 => $material_muestra,
 	4 => $datos_relevantes_muestras,
@@ -74,8 +73,9 @@ $datos = array(
 	8 => $servicio_id,
 	9 => $sitio_muestra,
 	10 => $tipo_muestra_id,
-	11 => $pacientes_id_cliente_codigo,	
-	12 => $categoria_id,		
+	11 => $categoria_id,
+	12 => $tipo_paciente_id,
+	13 => $muestra_paciente_id		
 );	
 
 echo json_encode($datos);
