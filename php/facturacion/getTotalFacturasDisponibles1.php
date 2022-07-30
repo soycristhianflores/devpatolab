@@ -14,26 +14,28 @@ $queryNumero = "SELECT number AS 'numero'
 	FROM facturas
 	WHERE empresa_id = '$empresa_id'
 	ORDER BY number DESC LIMIT 1";
+echo $queryNumero."**<br/>";	
 $resultNumero = $mysqli->query($queryNumero) or die($mysqli->error);
 
 if($resultNumero->num_rows>0){
 	$consultaNumero = $resultNumero->fetch_assoc();
-	if($consultaNumero['numero'] == ""){
-		$numeroAnterior = 0;
-	}else{
-		$numeroAnterior = $consultaNumero['numero'];
-	}
+	$numeroAnterior = $consultaNumero['numero'];
 }
 
 //CONSULTAMOS EL NUMERO MAXIMO PERMITIDO
 $queryNumeroMaximo = "SELECT rango_final AS 'numero'
 	FROM secuencia_facturacion
 	WHERE activo = 1 AND empresa_id = '$empresa_id'";
+echo $queryNumeroMaximo."**<br/>";
 $resultNumeroMaximo = $mysqli->query($queryNumeroMaximo) or die($mysqli->error);
 
 if($resultNumeroMaximo->num_rows>0){
 	$consultaNumeroMaximo = $resultNumeroMaximo->fetch_assoc();
-	$numeroMaximo = $consultaNumeroMaximo['numero'];
+	if($consultaNumero['numero'] == ""){
+		$numeroAnterior = 0;
+	}else{
+		$numeroAnterior = $consultaNumero['numero'];
+	}
 }
 
 $facturasPendientes = $numeroMaximo - $numeroAnterior;
