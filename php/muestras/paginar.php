@@ -32,7 +32,7 @@ $query = "SELECT p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre, ' ', p.apell
 	ORDER BY m.fecha DESC";	
 $result = $mysqli->query($query) or die($mysqli->error);
 
-$nroLotes = 100;
+$nroLotes = 200;
 $nroProductos = $result->num_rows;
 $nroPaginas = ceil($nroProductos/$nroLotes);
 $lista = '';

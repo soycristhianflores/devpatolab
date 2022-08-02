@@ -58,7 +58,7 @@ $query = "SELECT f.facturas_id AS facturas_id, DATE_FORMAT(f.fecha, '%d/%m/%Y') 
 	ORDER BY f.pacientes_id ASC";
 $result = $mysqli->query($query) or die($mysqli->error);
 
-$nroLotes = 100;
+$nroLotes = 200;
 $nroProductos = $result->num_rows;
 $nroPaginas = ceil($nroProductos/$nroLotes);
 $lista = '';
