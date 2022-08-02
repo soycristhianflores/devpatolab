@@ -19,20 +19,20 @@ $(document).ready(function() {
 	funciones();	
 	
 	//INICIO ABRIR VENTANA MODAL PARA EL REGISTRO DE LAS FACTURAS
-	$('#form_main #factura').on('click',function(e){
+	$('#form_main_grupal #factura').on('click',function(e){
 		e.preventDefault();
 		if (getUsuarioSistema() == 1 || getUsuarioSistema() == 2 || getUsuarioSistema() == 3 || getUsuarioSistema() == 4){
-			if($('#form_main #profesional').val() == "" || $('#form_main #profesional').val() == null){
+			if($('#form_main_grupal #profesional').val() == "" || $('#form_main_grupal #profesional').val() == null){
 				profesional = getColaboradorConsultaID();
 			}else{
-				profesional = $('#form_main #profesional').val();
+				profesional = $('#form_main_grupal #profesional').val();
 			}
 			
             $('#formCobros')[0].reset();
 			$("#formCobros #generar").attr('disabled', false);
             $('#formCobros #colaborador_id').val(profesional);
-			$('#formCobros #fechai').val($('#form_main #fecha_b').val());
-			$('#formCobros #fechaf').val($('#form_main #fecha_f').val());			
+			$('#formCobros #fechai').val($('#form_main_grupal #fecha_b').val());
+			$('#formCobros #fechaf').val($('#form_main_grupal #fecha_f').val());			
             $('#formCobros #profesional').val(getColaboradorNombre(profesional));
 			$('#formCobros #pro').val("Registro");
 		    $('#cobros').modal({
@@ -71,23 +71,23 @@ $(document).ready(function() {
 	//FIN PARA EL REGISTRO DE COBROS A PROFESIONALES
 	
     //INICIO PAGINATION (PARA LAS BUSQUEDAS SEGUN SELECCIONES)
-	$('#form_main #bs_regis').on('keyup',function(){
+	$('#form_main_grupal #bs_regis').on('keyup',function(){
+		 pagination(1);
+	});
+
+	$('#form_main_grupal #fecha_b').on('change',function(){
 	  pagination(1);
 	});
 
-	$('#form_main #fecha_b').on('change',function(){
-	  pagination(1);
-	});
-
-	$('#form_main #fecha_f').on('change',function(){
+	$('#form_main_grupal #fecha_f').on('change',function(){
 	  pagination(1);
 	});	  
 
-	$('#form_main #profesional').on('change',function(){
+	$('#form_main_grupal #profesional').on('change',function(){
 	  pagination(1);
 	});
 	
-	$('#form_main #estado').on('change',function(){
+	$('#form_main_grupal #estado').on('change',function(){
 	  pagination(1);
 	});	
 	//FIN PAGINATION (PARA LAS BUSQUEDAS SEGUN SELECCIONES)
@@ -153,8 +153,8 @@ function getColaborador(){
         url: url,
 	    async: true,
         success: function(data){
-		    $('#form_main #profesional').html("");
-			$('#form_main #profesional').html(data);
+		    $('#form_main_grupal #profesional').html("");
+			$('#form_main_grupal #profesional').html(data);
         }
      });		
 }
@@ -245,28 +245,28 @@ function agregarCobros(){
 //INICIO PAGINACION DE REGISTROS
 function pagination(partida){
 	var url = '<?php echo SERVERURL; ?>php/reporte_facturacion_grupal/paginar.php';
-    var fechai = $('#form_main #fecha_b').val();
-	var fechaf = $('#form_main #fecha_f').val();
+    var fechai = $('#form_main_grupal #fecha_b').val();
+	var fechaf = $('#form_main_grupal #fecha_f').val();
 	var dato = '';
 	var profesional = '';
 	var estado = '';
 		
-    if($('#form_main #profesional').val() == "" || $('#form_main #profesional').val() == null){
+    if($('#form_main_grupal #profesional').val() == "" || $('#form_main_grupal #profesional').val() == null){
 		profesional = '';
 	}else{
-		profesional = $('#form_main #profesional').val();
+		profesional = $('#form_main_grupal #profesional').val();
 	}
 	
-    if($('#form_main #estado').val() == "" || $('#form_main #estado').val() == null){
+    if($('#form_main_grupal #estado').val() == "" || $('#form_main_grupal #estado').val() == null){
 		estado = 2;
 	}else{
-		estado = $('#form_main #estado').val();
+		estado = $('#form_main_grupal #estado').val();
 	}	
 	
-	if($('#form_main #bs_regis').val() == "" || $('#form_main #bs_regis').val() == null){
+	if($('#form_main_grupal #bs_regis').val() == "" || $('#form_main_grupal #bs_regis').val() == null){
 		dato = '';
 	}else{
-		dato = $('#form_main #bs_regis').val();
+		dato = $('#form_main_grupal #bs_regis').val();
 	}
 
 	$.ajax({
@@ -284,7 +284,7 @@ function pagination(partida){
 }
 //FIN PAGINACION DE REGISTROS
 
-$('#form_main #reporte').on('click', function(e){
+$('#form_main_grupal #reporte').on('click', function(e){
     e.preventDefault();
     reporteEXCEL();
 });
@@ -292,14 +292,14 @@ $('#form_main #reporte').on('click', function(e){
 //INICIO REPORTE DE FACTURACION
 function reporteEXCEL(){
 	var colaborador = '';
-	var desde = $('#form_main #fecha_b').val();
-	var hasta = $('#form_main #fecha_f').val();
+	var desde = $('#form_main_grupal #fecha_b').val();
+	var hasta = $('#form_main_grupal #fecha_f').val();
 	var url = '';
 	
-    if($('#form_main #profesional').val() == "" || $('#form_main #profesional').val() == null){
+    if($('#form_main_grupal #profesional').val() == "" || $('#form_main_grupal #profesional').val() == null){
 		colaborador = '';
 	}else{
-		colaborador = $('#form_main #profesional').val();
+		colaborador = $('#form_main_grupal #profesional').val();
 	}
 	 
 	url = '<?php echo SERVERURL; ?>php/reporte_facturacion_grupal/reporte.php?desde='+desde+'&hasta='+hasta+'&colaborador='+colaborador;
@@ -479,8 +479,8 @@ function getEstado(){
         url: url,
 	    async: true,
         success: function(data){
-		    $('#form_main #estado').html("");
-			$('#form_main #estado').html(data);		
+		    $('#form_main_grupal #estado').html("");
+			$('#form_main_grupal #estado').html(data);		
         }
      });		
 }

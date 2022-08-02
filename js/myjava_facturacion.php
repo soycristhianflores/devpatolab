@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     //INICIO PAGINATION (PARA LAS BUSQUEDAS SEGUN SELECCIONES)
 	$('#form_main_facturas #bs_regis').on('keyup',function(){
+		alert("Hi");
 	  pagination(1);
 	});
 

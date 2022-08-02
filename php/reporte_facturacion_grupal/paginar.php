@@ -16,7 +16,7 @@ $estado = $_POST['estado'];
 if($profesional != ""){
 	$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.colaborador_id = '$profesional' AND f.estado = '$estado'";
 }else if($dato != ""){
-	$where = "WHERE f.estado = '$estado' AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%')";
+	$where = "WHERE f.estado = '$estado' AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%')";
 }else{
 	$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.estado = '$estado'";
 }

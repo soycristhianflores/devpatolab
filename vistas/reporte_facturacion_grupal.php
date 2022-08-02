@@ -149,7 +149,7 @@ $mysqli->close();//CERRAR CONEXIÓN
 		<li class="breadcrumb-item active" id="acciones_factura"><span id="label_acciones_factura"></span>Reporte de Facturación Grupal</li>
 	</ol>
 	
-    <form class="form-inline" id="form_main">
+    <form class="form-inline" id="form_main_grupal">
 		<div class="form-group mr-1">
 			<div class="input-group">				
 				<div class="input-group-append">				
