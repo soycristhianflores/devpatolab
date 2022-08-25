@@ -160,6 +160,7 @@ $mysqli->close();//CERRAR CONEXIÓN
 				<div class="input-group mb-3">
 				  <input type="hidden" class="form-control" placeholder="Profesional" id="clienteIDGrupo" name="clienteIDGrupo" readonly required>
 				  <input type="text" class="form-control" placeholder="Paciente" id="clienteNombreGrupo" name="clienteNombreGrupo" readonly required>
+				  <input type="number" class="form-control" placeholder="Paciente" id="tamano" name="tamano" readonly required>
 				  <div class="input-group-append" id="grupo_buscar_colaboradores">				
 					<a data-toggle="modal" href="#" class="btn btn-outline-success" id="buscar_pacienteGrupo"><div class="sb-nav-link-icon"></div><i class="fas fa-search-plus fa-lg"></i></a>
 				  </div>

@@ -11,7 +11,6 @@ $(document).ready(function() {
 
     //INICIO PAGINATION (PARA LAS BUSQUEDAS SEGUN SELECCIONES)
 	$('#form_main_facturas #bs_regis').on('keyup',function(){
-		alert("Hi");
 	  pagination(1);
 	});
 
@@ -785,6 +784,9 @@ function formFacturaGrupo(){
 			tamaño++;
 		}
 	});
+
+	//ENVIAMOS EL TAMAÑO AL FORMULARIO DE FACTURAS, QUE POSTERIOR MENTE SE USARA PARA SABER EL TAMAÑO DE LA TABLA Y PODER ITERAR LOS DETALLES DE ESTA
+	$('#formGrupoFacturacion #tamano').val(tamaño);
 	netoGrupo = (subTotal + ISVGrupo) - descuentoGrupo;
 
 	$('#formGrupoFacturacion #subTotalBillGrupo').val(parseFloat(subTotal).toFixed(2));
