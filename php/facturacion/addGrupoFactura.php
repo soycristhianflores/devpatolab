@@ -89,7 +89,7 @@ if($tamano_tabla >0){
 		$lineaCantidad = 0;
 
 		//ALMACENAMOS EL DETALLE DE LA FACTURA EN LA ENTIDAD FACTURAS DETALLE
-		for ($i = 0; $i <= $tamaño; $i++){//INICIO CICLO FOR			
+		for ($i = 0; $i < $tamaño; $i++){//INICIO CICLO FOR		
 			$facturas_grupal_detalle_id = correlativo("facturas_grupal_detalle_id","facturas_grupal_detalle");
 			$muestra_id = $_POST['billGrupoMuestraID'][$i];
 			$materialEnviado = $_POST['billGrupoMaterial'][$i];

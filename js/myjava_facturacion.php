@@ -781,6 +781,7 @@ function formFacturaGrupo(){
 			subTotal += parseFloat($('#netoAntesISVFacturaGrupo_'+this.value).attr('data-value'));
 			ISVGrupo += parseFloat($('#ISVFacturaGrupo_'+this.value).attr('data-value'));
 			descuentoGrupo += parseFloat($('#DescuentoFacturaGrupo_'+this.value).attr('data-value'));
+			console.log(tamaño);
 			tamaño++;
 		}
 	});
