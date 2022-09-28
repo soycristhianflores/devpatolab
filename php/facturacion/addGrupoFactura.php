@@ -10,7 +10,7 @@ $fecha = $_POST['fechaGrupo'];
 $colaborador_id = $_POST['colaborador_idGrupo'];
 $servicio_id = $_POST['servicio_idGrupo'];
 $notes = cleanStringStrtolower($_POST['notesBillGrupo']);
-$tamaño = intval($_POST['tamano']);
+$tamano = intval($_POST['tamano']);
 $usuario = $_SESSION['colaborador_id'];
 $empresa_id = $_SESSION['empresa_id'];
 $fecha_registro = date("Y-m-d H:i:s");
@@ -63,7 +63,7 @@ if($result->num_rows>0){
 //OBTENEMOS EL TAMAÑO DE LA TABLA
 if(isset($_POST['pacienteIDBillGrupo'])){	
 	if($_POST['pacienteIDBillGrupo'][0] != "" && $_POST['importeBillGrupo'][0] != "" && $_POST['totalBillGrupo'][0] != ""){
-		$tamano_tabla = $tamaño;
+		$tamano_tabla = $tamano;
 	}else{
 		$tamano_tabla = 0;
 	}
@@ -89,7 +89,7 @@ if($tamano_tabla >0){
 		$lineaCantidad = 0;
 
 		//ALMACENAMOS EL DETALLE DE LA FACTURA EN LA ENTIDAD FACTURAS DETALLE
-		for ($i = 0; $i < $tamaño; $i++){//INICIO CICLO FOR		
+		for ($i = 0; $i < $tamano; $i++){//INICIO CICLO FOR		
 			$facturas_grupal_detalle_id = correlativo("facturas_grupal_detalle_id","facturas_grupal_detalle");
 			$muestra_id = $_POST['billGrupoMuestraID'][$i];
 			$materialEnviado = $_POST['billGrupoMaterial'][$i];
