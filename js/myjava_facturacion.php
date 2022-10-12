@@ -1557,6 +1557,7 @@ function getTotalFacturasDisponibles(){
 	   success:function(registro){
 			var valores = eval(registro);
 			var mensaje = "";
+
 			if(valores[0] >=10 && valores[0] <= 30){
 				mensaje = "Total Facturas disponibles: " + valores[0];
 
@@ -1565,31 +1566,33 @@ function getTotalFacturasDisponibles(){
 
 				$("#mensajeFacturas").attr("disabled", true);
 				$("#formulario_facturacion #validar").attr("disabled", false);
-				$("#formulario_facturacion #cobrar").attr("disabled", false);	
-
-
+				$("#formulario_facturacion #cobrar").attr("disabled", false);
+				$("#formGrupoFacturacion #validar").attr("disabled", false);	
 			}else if(valores[0] >=1 && valores[0] <= 9){
 				mensaje = "Total Facturas disponibles: " + valores[0];
 				$("#mensajeFacturas").html(mensaje).addClass("alert alert-danger");
 				$("#mensajeFacturas").html(mensaje).removeClass("alert alert-warning");
 				$("#mensajeFacturas").attr("disabled", true);
 				$("#formulario_facturacion #validar").attr("disabled", false);
-				$("#formulario_facturacion #cobrar").attr("disabled", false);	
+				$("#formulario_facturacion #cobrar").attr("disabled", false);
+				$("#formGrupoFacturacion #validar").attr("disabled", false);	
 			}
 			else{
 				mensaje = "";
 
 				$("#formulario_facturacion #validar").attr("disabled", false);	
-				$("#formulario_facturacion #cobrar").attr("disabled", false);			
+				$("#formulario_facturacion #cobrar").attr("disabled", false);
+				$("#formGrupoFacturacion #validar").attr("disabled", false);			
 				$("#mensajeFacturas").html(mensaje).addClass("alert alert-danger");
 				$("#mensajeFacturas").html(mensaje).removeClass("alert alert-warning");				
 			}
 
-			if(valores[0] == 0){
+			if(valores[0] == 0 || valores[0] < 0){
 				mensaje = "No puede seguir facturando";
 
 				$("#formulario_facturacion #cobrar").attr("disabled", true);	
-				$("#formulario_facturacion #validar").attr("disabled", true);			
+				$("#formulario_facturacion #validar").attr("disabled", true);
+				$("#formGrupoFacturacion #validar").attr("disabled", true);			
 				$("#mensajeFacturas").html(mensaje).addClass("alert alert-danger");
 				$("#mensajeFacturas").html(mensaje).removeClass("alert alert-warning");
 			}
@@ -1597,7 +1600,8 @@ function getTotalFacturasDisponibles(){
 			if(valores[1] == 1){
 				mensaje += "<br/>Su fecha límite es: " + valores[2];
 				$("#formulario_facturacion #validar").attr("disabled", false);	
-				$("#formulario_facturacion #cobrar").attr("disabled", false);				
+				$("#formulario_facturacion #cobrar").attr("disabled", false);	
+				$("#formGrupoFacturacion #validar").attr("disabled", false);			
 				$("#mensajeFacturas").html(mensaje).addClass("alert alert-warning");
 				$("#mensajeFacturas").html(mensaje).removeClass("alert alert-danger");			
 			}
@@ -1605,7 +1609,8 @@ function getTotalFacturasDisponibles(){
 			if(valores[1] == 0){
 				mensaje += "<br/>Ya alcanzo su fecha límite";
 				$("#formulario_facturacion #validar").attr("disabled", true);	
-				$("#formulario_facturacion #cobrar").attr("disabled", true);				
+				$("#formulario_facturacion #cobrar").attr("disabled", true);	
+				$("#formGrupoFacturacion #validar").attr("disabled", true);			
 				$("#mensajeFacturas").html(mensaje).addClass("alert alert-danger");	
 				$("#mensajeFacturas").html(mensaje).removeClass("alert alert-warning");		
 			}			
