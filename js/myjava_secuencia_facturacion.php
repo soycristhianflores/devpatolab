@@ -329,6 +329,7 @@ function editarRegistro(secuencia_facturacion_id){
 								
 				$('#secuenciaFacturacion').modal({
 					show:true,
+					keyboard: false,
 					backdrop:'static'
 				});
 				return false;
