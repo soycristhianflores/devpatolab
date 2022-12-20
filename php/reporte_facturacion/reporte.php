@@ -56,6 +56,7 @@ $registro = "SELECT f.facturas_id AS 'facturas_id', f.fecha AS 'fecha', p.identi
 	INNER JOIN colaboradores AS c
 	ON f.colaborador_id = c.colaborador_id
 	".$where."
+	GROUP BY f.number
 	ORDER BY f.fecha, f.number ASC";
 $result = $mysqli->query($registro) or die($mysqli->error);
 
