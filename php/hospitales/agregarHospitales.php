@@ -18,8 +18,7 @@ $result = $mysqli->query($query) or die($mysqli->error);
 
 if($result->num_rows==0){
 	$hospitales_id  = correlativo('hospitales_id', 'hospitales');
-	$insert = "INSERT INTO hospitales 
-		VALUES('$hospitales_id','$hospitales')";
+	$insert = "INSERT INTO hospitales VALUES('$hospitales_id','$hospitales')";
 	$query = $mysqli->query($insert) or die($mysqli->error);
 	
     if($query){

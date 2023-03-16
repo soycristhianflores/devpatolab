@@ -7,7 +7,7 @@ $mysqli = connect_mysqli();
 
 $hospitales_id = $_POST['hospitales_id'];
 
-$query = "SELECT *
+$query = "SELECT nombre
 	FROM hospitales
 	WHERE hospitales_id  = '$hospitales_id '";
 $result = $mysqli->query($query) or die($mysqli->error);
@@ -21,7 +21,7 @@ if($result->num_rows>=0){
 }
 
 $datos = array(
-	0 => $nombre,
+	0 => $nombre
 );	
 
 echo json_encode($datos);

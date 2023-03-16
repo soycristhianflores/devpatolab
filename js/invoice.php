@@ -62,6 +62,35 @@ function deleteFacturasDetalles(facturas_detalle_id){
 	});
 }
 
+//FACTURACION
+$(document).ready(function() {		
+	$('#formulario_facturacion #label_facturas_activo').html("Contado");
+	
+    $('#formulario_facturacion .switch').change(function(){    
+        if($('input[name=facturas_activo]').is(':checked')){
+            $('#formulario_facturacion #label_facturas_activo').html("Contado");
+            return true;
+        }
+        else{
+            $('#formulario_facturacion #label_facturas_activo').html("Crédito");
+            return false;
+        }
+    });	
+
+	$('#formGrupoFacturacion #label_facturas_grupal_activo').html("Contado");
+	
+    $('#formGrupoFacturacion .switch').change(function(){    
+        if($('input[name=facturas_grupal_activo]').is(':checked')){
+            $('#formGrupoFacturacion #label_facturas_grupal_activo').html("Contado");
+            return true;
+        }
+        else{
+            $('#formGrupoFacturacion #label_facturas_grupal_activo').html("Crédito");
+            return false;
+        }
+    });		
+});
+
 $(document).ready(function(){
 	$(document).on('click', '#checkAll', function() {          	
 		$(".itemRow").prop("checked", this.checked);

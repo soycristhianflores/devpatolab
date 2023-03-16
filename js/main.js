@@ -84,7 +84,7 @@ $('.FormularioAjax').submit(function(e){
 						title: datos[0], 
 						text: datos[1],
 						type: datos[2],
-						confirmButtonClass: datos[3]
+						confirmButtonClass: datos[3],
 					});						
 				}else{
 					swal({
@@ -103,6 +103,11 @@ $('.FormularioAjax').submit(function(e){
 				
 				llenarTabla(datos[6]);
 				
+				if (datos[6] == "formEmpresas"){
+					getEmpresa();
+					getHospitales();				
+				}
+
 				if (datos[6] == "AtencionMedica"){
 					printReport(datos[8]);//LLAMAMOS A LA FUNCION IMPRIMIR REPORTE DE LABORATORIO .-Función se encuenta en myjava_atencion_medica.js
 					setTimeout(sendMailAtencion(datos[8]),5000);					
@@ -151,7 +156,13 @@ $('.FormularioAjax').submit(function(e){
 				if (datos[6] == "Muestras"){					
 					//printMuestra(datos[8]); //LLAMAMOS LA FUNCION PARA IMPRIMIR LA FACTURA .-Función se encuenta en myjava_muestras.js
 					createBill(datos[8]);//LLAMAMOS LA FACTURA .-Función se encuenta en myjava_atencioN_medica.js
-				}					
+				}
+				
+				if (datos[6] == "formPacientesAdmision"){					
+					//printMuestra(datos[10]); //LLAMAMOS LA FUNCION PARA IMPRIMIR LA FACTURA .-Función se encuenta en myjava_muestras.js
+					createBill(datos[10]);//LLAMAMOS LA FACTURA .-Función se encuenta en myjava_atencioN_medica.js
+				}				
+				
 				
 				if(datos[9] == "Eliminar"){
 					$('#' + datos[7]).modal('hide');
@@ -377,6 +388,10 @@ function llenarTabla(dato){
 	if(dato == "formPacientes"){
 		pagination(1);
 	}
+
+	if(dato == "formPacientesAdmision"){
+		pagination(1);
+	}	
 	
 	if(dato == "formCita"){
 		pagination(1);

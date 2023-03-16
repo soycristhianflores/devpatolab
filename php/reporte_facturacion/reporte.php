@@ -288,11 +288,13 @@ $total_total_neto = 0;
 
 if($result->num_rows>0){
 	while($registro2 = $result->fetch_assoc()){
-		$facturas_id = $registro2['facturas_id'];
+		$facturas_id = $registro2['numero'];
 		//CONSULTAR DATOS DETALLE DE Factura
-		$query_detalle = "SELECT precio, descuento, cantidad, isv_valor
-			FROM facturas_detalle
-			WHERE facturas_id = '$facturas_id'";
+		$query_detalle = "SELECT SUM(precio) AS 'precio', SUM(descuento) AS 'descuento', cantidad, SUM(isv_valor) As 'isv_valor'
+			FROM facturas_detalle fd
+			INNER JOIN facturas AS f
+			ON fd.facturas_id = f.facturas_id
+			WHERE f.number = '$facturas_id'";
 		$result_detalles = $mysqli->query($query_detalle) or die($mysqli->error);
 
 		$cantidad = 0;
@@ -304,9 +306,9 @@ if($result->num_rows>0){
 		$neto_antes_isv = 0;
 	
 		while($registrodetalles = $result_detalles->fetch_assoc()){
-			$precio += ($registrodetalles["precio"] * $registrodetalles["cantidad"]);
-			$cantidad += $registrodetalles["cantidad"];
-			$descuento += $registrodetalles["descuento"];
+			$precio = ($registrodetalles["precio"] * $registrodetalles["cantidad"]);
+			$cantidad = $registrodetalles["cantidad"];
+			$descuento = $registrodetalles["descuento"];
 			$total_precio = $registrodetalles["precio"] * $registrodetalles["cantidad"];
 			$neto_antes_isv += $total_precio;
 			$isv_neto += $registrodetalles["isv_valor"];

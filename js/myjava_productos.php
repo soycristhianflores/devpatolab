@@ -162,6 +162,22 @@ function funciones(){
 	getAlmacen();
 	getMedida();
 	getCategoria();
+	getCategoriaProducto();
+}
+
+function getCategoriaProducto(){
+    var url = '<?php echo SERVERURL; ?>php/admision/getTipoMuestra.php';	
+		
+	$.ajax({
+        type: "POST",
+        url: url,
+	    async: true,
+        success: function(data){	
+		    $('#formulario_productos #categoria_producto').html("");
+			$('#formulario_productos #categoria_producto').html(data);
+			$('#formulario_productos #categoria_producto').selectpicker('refresh');
+		}			
+     });		
 }
 
 function getAlmacen(){
@@ -174,6 +190,7 @@ function getAlmacen(){
         success: function(data){	
 		    $('#formulario_productos #almacen').html("");
 			$('#formulario_productos #almacen').html(data);		
+			$('#formulario_productos #almacen').selectpicker('refresh');
 		}			
      });		
 }
@@ -187,7 +204,8 @@ function getMedida(){
 	    async: true,
         success: function(data){	
 		    $('#formulario_productos #medida').html("");
-			$('#formulario_productos #medida').html(data);			
+			$('#formulario_productos #medida').html(data);	
+			$('#formulario_productos #medida').selectpicker('refresh');		
 		}			
      });		
 }
@@ -201,7 +219,8 @@ function getCategoria(){
 	    async: true,
         success: function(data){	
 		    $('#formulario_productos #categoria').html("");
-			$('#formulario_productos #categoria').html(data);		
+			$('#formulario_productos #categoria').html(data);	
+			$('#formulario_productos #categoria').selectpicker('refresh');	
 		}			
      });		
 }
@@ -335,8 +354,11 @@ var edit_productos_dataTable = function(tbody, table){
 				
 				$('#formulario_productos #nombre').val(valores[0]);
 				$('#formulario_productos #categoria').val(valores[1]);
+				$('#formulario_productos #categoria').selectpicker('refresh');
 				$('#formulario_productos #medida').val(valores[3]);
-				$('#formulario_productos #almacen').val(valores[4]);				
+				$('#formulario_productos #medida').selectpicker('refresh');
+				$('#formulario_productos #almacen').val(valores[4]);
+				$('#formulario_productos #almacen').selectpicker('refresh');				
 				$('#formulario_productos #cantidad').val(valores[5]);
 				$('#formulario_productos #precio_compra').val(valores[6]);
 				$('#formulario_productos #precio_venta').val(valores[7]);
@@ -345,7 +367,8 @@ var edit_productos_dataTable = function(tbody, table){
 				$('#formulario_productos #cantidad_maxima').val(valores[12]);
 				$('#formulario_productos #precio_venta2').val(valores[13]);
 				$('#formulario_productos #precio_venta3').val(valores[14]);				
-				$('#formulario_productos #precio_venta4').val(valores[15]);				
+				$('#formulario_productos #precio_venta4').val(valores[15]);			
+				$('#formulario_productos #categoria_producto').val(valores[17]);
 				caracteresDescripcion();
 
 				if(valores[9] == 1){
@@ -412,9 +435,11 @@ var delete_productos_dataTable = function(tbody, table){
 				
 				$('#formulario_productos #nombre').val(valores[0]);
 				$('#formulario_productos #categoria').val(valores[1]);
-				$('#formulario_productos #concentracion').val(valores[2]);
+				$('#formulario_productos #categoria').selectpicker('refresh');
 				$('#formulario_productos #medida').val(valores[3]);
-				$('#formulario_productos #almacen').val(valores[4]);				
+				$('#formulario_productos #medida').selectpicker('refresh');
+				$('#formulario_productos #almacen').val(valores[4]);
+				$('#formulario_productos #almacen').selectpicker('refresh');				
 				$('#formulario_productos #cantidad').val(valores[5]);
 				$('#formulario_productos #precio_compra').val(valores[6]);
 				$('#formulario_productos #precio_venta').val(valores[7]);
@@ -423,7 +448,8 @@ var delete_productos_dataTable = function(tbody, table){
 				$('#formulario_productos #cantidad_maxima').val(valores[12]);
 				$('#formulario_productos #precio_venta2').val(valores[13]);
 				$('#formulario_productos #precio_venta3').val(valores[14]);				
-				$('#formulario_productos #precio_venta4').val(valores[15]);				
+				$('#formulario_productos #precio_venta4').val(valores[15]);	
+				$('#formulario_productos #categoria_producto').val(valores[17]);					
 				caracteresDescripcion();
 
 				if(valores[9] == 1){

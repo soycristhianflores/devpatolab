@@ -10,7 +10,7 @@
 	const SERVER = "localhost";
     const DB = "clinicarehn_clientes_patolab";
     const USER = "clinicarehn_clinicare";
-    const PASS = "Clin1c@r32022#%.";
+    const PASS = "Clin1c@r32022#";
 
     const PRODUCT_PATH = "/githubPatolab/php/atencion_pacientes/Examenes/";
 

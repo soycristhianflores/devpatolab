@@ -13,6 +13,7 @@
       <li class="nav-item dropdown active">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-hospital-user fa-lg"></i>&nbsp;Recepción</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/admision.php">Admision</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/pacientes.php">Clientes</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/citas.php">Calendario</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/hospitales.php">Hospitales</a>
@@ -76,6 +77,7 @@
       <li class="nav-item dropdown active">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-hospital-user fa-lg"></i>&nbsp;Recepción</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/admision.php">Admision</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/pacientes.php">Clientes</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/citas.php">Calendario</a>
 		      <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/hospitales.php">Hospitales</a>

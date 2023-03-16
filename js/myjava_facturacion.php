@@ -1384,6 +1384,7 @@ function pay(facturas_id){
 				$('#formulario_facturacion #servicio_id').val(datos[5]);
 				$('#formulario_facturacion #notes').val(datos[6]);
 				$('#formulario_facturacion #paciente_muestra').val(datos[7]);
+				$('#formulario_facturacion #muestras_numero').val(datos[8]);
 
 				if(getTipoPaciente(datos[0]) == 2){
 					$('#formulario_facturacion #grupo_paciente_factura').show();

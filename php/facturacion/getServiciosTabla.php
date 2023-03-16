@@ -6,7 +6,7 @@ include "../funtions.php";
 $mysqli = connect_mysqli(); 
 
 //CONSULTA LOS DATOS DE LA ENTIDAD CORPORACION
-$consulta = "SELECT  * FROM servicios";
+$consulta = "SELECT * FROM servicios";
 $result = $mysqli->query($consulta);	
 
 $arreglo = array();

@@ -3,6 +3,7 @@
 <script src="<?php echo SERVERURL; ?>js/query/theme.js"></script>
 <script src="<?php echo SERVERURL; ?>bootstrap/js/popper.min.js" crossorigin="anonymous"></script>
 <script src="<?php echo SERVERURL; ?>bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="<?php echo SERVERURL; ?>bootstrap/js/bootstrap-select.min.js" crossorigin="anonymous"></script>
 <script src="<?php echo SERVERURL; ?>js/main.js" crossorigin="anonymous"></script>
 <script src="<?php echo SERVERURL; ?>bootstrap/js/jquery.mCustomScrollbar.concat.min.js"></script>	
 <script src="<?php echo SERVERURL; ?>sweetalert/sweetalert.min.js" crossorigin="anonymous"></script>
@@ -20,5 +21,4 @@
 
 <!--Boton volver al principio-->
 <script src="<?php echo SERVERURL; ?>js/query/arriba.js"></script> 
-<script src="<?php echo SERVERURL; ?>js/query/menu-despelgable.js"></script>
 <span class="ir-arriba" data-toggle="tooltip" data-placement="top" title="Ir Arriba"><i class="fas fa-chevron-up fa-xs"></i></span>  

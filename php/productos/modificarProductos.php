@@ -40,6 +40,16 @@ if(isset($_POST['producto_isv_factura'])){
 	$isv = 2;
 }
 
+if(isset($_POST['categoria_producto'])){//COMPRUEBO SI LA VARIABLE ESTA DIFINIDA
+	if($_POST['categoria_producto'] == ""){
+		$tipo_muestra_id = 0;
+	}else{
+		$tipo_muestra_id = $_POST['categoria_producto'];
+	}
+}else{
+	$tipo_muestra_id = 0;
+}
+
 $update = "UPDATE productos
 	SET
 		nombre = '$nombre',
@@ -53,7 +63,8 @@ $update = "UPDATE productos
 		isv = '$isv',
 		descripcion = '$descripcion',
 		cantidad_minima = '$cantidad_minima',
-		cantidad_maxima = '$cantidad_maxima'
+		cantidad_maxima = '$cantidad_maxima',
+		tipo_muestra_id = '$tipo_muestra_id'
 	WHERE productos_id = '$productos_id'";
 $query = $mysqli->query($update) or die($mysqli->error);
 

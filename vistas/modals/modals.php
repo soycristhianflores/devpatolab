@@ -76,7 +76,7 @@
 					  <input type="text" required id="lastname" name="lastname" placeholder="Apellido" class="form-control"/>
 					</div>
 					<div class="col-md-4 mb-3">
-					  <label for="fecha">Identidad o RTN <span class="priority">*<span/></label>
+					  <label for="rtn">Identidad o RTN <span class="priority">*<span/></label>
 					  <input type="number" required id="rtn" name="rtn" class="form-control" placeholder="Identidad o RTN" maxlength="14" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
 					</div>										
 				</div>	
@@ -154,15 +154,15 @@
 				</div>	
 				<div class="form-row">			
 					<div class="col-md-4 mb-3">
-					  <label for="sexo">Tipo <span class="priority">*<span/></label>
-					  <div class="input-group mb-3">
-						  <select id="paciente_tipo" name="paciente_tipo" class="custom-select" data-toggle="tooltip" data-placement="top" title="Tipo Cliente">
-								<option value="">Seleccione</option>
-						  </select>
-						  <div class="input-group-append" id="buscar_profesion_pacientes">				
-							<a data-toggle="modal" href="#" class="btn btn-outline-success" id="servicio_boton"><div class="sb-nav-link-icon"></div><i class="fas fa-search fa-lg"></i></a>
-						  </div>
-					   </div>					  
+						<label for="sexo">Tipo <span class="priority">*<span/></label>
+						<div class="input-group mb-3">
+							<select id="paciente_tipo" name="paciente_tipo" class="custom-select" data-toggle="tooltip" data-placement="top" title="Tipo Cliente">
+									<option value="">Seleccione</option>
+							</select>
+							<div class="input-group-append" id="buscar_profesion_pacientes">				
+								<a data-toggle="modal" href="#" class="btn btn-outline-success" id="servicio_boton"><div class="sb-nav-link-icon"></div><i class="fas fa-search fa-lg"></i></a>
+							</div>
+						</div>					  
 					</div>				
 				</div>					
 				<div class="form-row">			  
@@ -1045,12 +1045,12 @@
 							</div>
 						</div>	 
 					</div>							
-				</div>
+				</div>				
 				<div class="form-row">
 					<div class="col-md-12 mb-3">
 					  <label>Hospital / Clínica <span class="priority">*<span/></label>
 					  <input type="text" name="hospitales" id="hospitales" class="form-control" id="contranaterior" placeholder="Hospital o Clínica" required="required">					
-				</div>			
+				</div>							
 			</form>
         </div>		
 		<div class="modal-footer">
@@ -1215,25 +1215,38 @@
 					  <input type="text" required class="form-control" name="nombre" id="nombre" placeholder="Producto o Servicio" maxlength="150" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
 					</div>
 					<div class="col-md-3 mb-3">
-					  <label>Categoría <span class="priority">*<span/></label>
-					  <select id="categoria" name="categoria" class="custom-select" data-toggle="tooltip" data-placement="top" title="Categoría" required>   				   
-					  </select> 
-					</div>	
-					<div class="col-md-3 mb-3">
-					  <label>Concentración <span class="priority">*<span/></label>
-				      <input type="number" required class="form-control" name="concentracion" id="concentracion" placeholder="Concentracion" maxlength="3" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
-					</div>					
-				</div>				
-				<div class="form-row">				
-					<div class="col-md-3 mb-3">
-					  <label>Medida <span class="priority">*<span/></label>
-					  <select id="medida" name="medida" class="custom-select" data-toggle="tooltip" data-placement="top" title="Medida" required>   				   
-					  </select>
+						<label for="categoria">Tipo<span class="priority">*<span/></label>			
+						<div class="input-group mb-3">
+							<select class="selectpicker" id="categoria" name="categoria" required data-live-search="true" title="Tipo" data-size="10">			  
+							</select>
+						</div>
 					</div>
 					<div class="col-md-3 mb-3">
-						<label>Almacén <span class="priority">*<span/></label>
-						<select id="almacen" name="almacen" class="custom-select" data-toggle="tooltip" data-placement="top" title="Almacén" required>   				   
-						</select> 
+						<label for="categoria">Categoria <span class="priority">*<span/></label>			
+						<div class="input-group mb-3">
+							<select class="selectpicker" id="categoria_producto" name="categoria_producto" required data-live-search="true" title="Categoria" data-size="10">			  
+							</select>
+						</div>
+					</div>																								
+					<div class="col-md-3 mb-3" style="display:none;">
+						<label for="concentracion">Concentración <span class="priority">*<span/></label>			
+						<input type="text" required id="concentracion" name="concentracion" step="0.01" placeholder="Concentración" class="form-control"/>
+					</div>				
+				</div>				
+				<div class="form-row">	
+					<div class="col-md-3 mb-3">
+						<label for="medida">Medida <span class="priority">*<span/></label>			
+						<div class="input-group mb-3">
+							<select class="selectpicker" id="medida" name="medida" required data-live-search="true" title="Medida" data-size="10">			  
+							</select>
+						</div>
+					</div>	
+					<div class="col-md-3 mb-3">
+						<label for="almacen">Almacén <span class="priority">*<span/></label>			
+						<div class="input-group mb-3">
+							<select class="selectpicker" id="almacen" name="almacen" required data-live-search="true" title="Almacén" data-size="10">			  
+							</select>
+						</div>
 					</div>				
 					<div class="col-md-3 mb-3">
 					  <label>Cantidad <span class="priority">*<span/></label>
@@ -2126,3 +2139,266 @@
     </div>
 </div>
 <!--FIN MODAL PARA FORMULARIO DESCENTOS EN FACTURACION-->
+
+
+<!--INICIO ADMISION CLIENTES-->
+<div class="modal fade" id="modal_admision_clientes">
+	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Registro Clientes</h4>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+        </div><div class="container"></div>
+        <div class="modal-body">		
+			<form class="FormularioAjax form-horizontal" id="formulario_admision" action="" method="POST" data-form="" enctype="multipart/form-data">				
+				<div class="card">
+					<div class="card-header text-white bg-info mb-3" align="center">
+						DATOS DEL CLIENTE
+					</div>
+					<div class="card-body">
+						<div class="form-row">
+							<div class="col-md-4 mb-3">
+								<label for="name">Nombre <span class="priority">*<span/></label>
+								<input type="text" required id="name" name="name" placeholder="Nombre" class="form-control"/>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="lastname">Apellido <span class="priority">*<span/></label>
+								<input type="text" required id="lastname" name="lastname" placeholder="Apellido" class="form-control"/>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="rtn">Identidad o RTN <span class="priority">*<span/></label>
+								<input type="number" required id="rtn" name="rtn" class="form-control" placeholder="Identidad o RTN" maxlength="14" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="0"/>
+							</div>										
+						</div>					
+						
+						<div class="form-row">				
+							<div class="col-md-3 mb-3">							
+								<label for="fecha_nac">Fecha de Nacimiento</label>
+								<input type="date" required id="fecha_nac" name="fecha_nac" value="<?php echo date ("Y-m-d");?>" class="form-control"/>
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="edad">Edad</label>
+								<input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" maxlength="8" />
+							</div>												
+							<div class="col-md-3 mb-3">
+								<label for="telefono">Teléfono</label>
+								<input type="number" id="telefono1" name="telefono1" class="form-control" placeholder="Teléfono" maxlength="8" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+							</div>	
+							<div class="col-md-3 mb-3">
+								<label for="genero">Genero <span class="priority">*<span/></label>			
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="genero" name="genero" required data-live-search="true" title="Genero">			  
+									</select>
+								</div>
+							</div>															
+						</div>				
+						<div class="form-row">			  
+							<div class="col-md-12 mb-3">
+								<label for="direccion">Dirección</label>
+								<div class="input-group mb-3">
+									<textarea id="direccion" name="direccion" placeholder="Dirección " class="form-control" maxlength="100" rows="4"></textarea>
+									<div class="input-group-append">				
+										<span class="input-group-text"><div class="sb-nav-link-icon"></div><i class="fas fa-address-card fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>	
+						<div class="form-row">			  
+							<div class="col-md-12 mb-3">
+							<label for="correo">Correo</label>
+							<input type="email" name="correo" id="correo" placeholder="alguien@algo.com" class="form-control" data-toggle="tooltip" data-placement="top" title="Este correo será utilizado para enviar las citas creadas y las reprogramaciones, como las notificaciones de las citas pendientes de los usuarios." maxlength="100"/><label id="validate"></label>
+							</div>
+						</div>	
+					</div>	
+				</div>
+				<div class="card">
+					<div class="card-header text-white bg-info mb-3" align="center">
+						DATOS DE LA MUESTRA
+					</div>
+					<div class="card-body">
+						<div class="form-row">				
+							<div class="col-md-4 mb-3">
+								<label for="empresa">Empresa</label>
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="empresa" name="empresa" data-live-search="true" title="Empresa" data-size="10">			  
+									</select>
+									<div class="input-group-append" id="buscar_profesion_pacientes">				
+										<a data-toggle="modal" href="#" class="btn btn-outline-success" id="add_empresa" data-placement="top" title="Registrar Empresa"><div class="sb-nav-link-icon"></div><i class="fas fa-building fa-lg"></i> Registrar</a>
+									</div>
+								</div>					  
+							</div>	
+							<div class="col-md-3 mb-3">
+								<label for="empresa">Hospital/Clínica</label>			
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="hospital" name="hospital" data-live-search="true" title="Hospital/Clínica" data-size="10">			  
+									</select>
+								</div>
+							</div>										
+							<div class="col-md-3 mb-3" style=display:none;">
+							  <label for="referencia">Referencia</label>
+							  <input type="text" id="referencia" name="referencia" class="form-control" placeholder="Referencia" />
+							</div>	
+							<div class="col-md-3 mb-3">
+								<label for="tipo_muestra">Tipo Muestra <span class="priority">*<span/></label>			
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="tipo_muestra" name="tipo_muestra" required data-live-search="true" title="Tipo Muestra" data-size="10">			  
+									</select>
+								</div>
+							</div>																											
+						</div>	
+						
+						<div class="form-row">		
+							<div class="col-md-3 mb-3">
+								<label for="remitente">Producto <span class="priority">*<span/></label>			
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="producto" name="producto" required data-live-search="true" title="Producto" data-size="10">			  
+									</select>
+								</div>
+							</div>																	
+							<div class="col-md-3 mb-3">
+								<label for="remitente">Remitente <span class="priority">*<span/></label>			
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="remitente" name="remitente" required data-live-search="true" title="Remitente" data-size="10">			  
+									</select>
+								</div>
+							</div>	
+							<div class="col-md-6 mb-3" style=display:none;">
+								<label for="categoria">Categoría</label>			
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="categoria" name="categoria" data-live-search="true" title="Categoría" data-size="10">			  
+									</select>
+								</div>
+							</div>	
+						</div>							
+							
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label for="sitio_muestra">Sitio Preciso de la Muestra</label>
+								<div class="input-group mb-3">
+									<textarea id="sitio_muestra" name="sitio_muestra" placeholder="Sitio Preciso de la Muestra" class="form-control" maxlength="100" rows="4"></textarea>
+									<div class="input-group-append">				
+										<span class="input-group-text"><div class="sb-nav-link-icon"></div><i class="fas fa-file-medical fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="diagnostico_clinico">Diagnostico Clínico</label>
+								<div class="input-group mb-3">
+									<textarea id="diagnostico_clinico" name="diagnostico_clinico" placeholder="Diagnostico Clínico" class="form-control" maxlength="100" rows="4"></textarea>
+									<div class="input-group-append">				
+										<span class="input-group-text"><div class="sb-nav-link-icon"></div><i class="fas fa-file-medical fa-lg"></i></span>
+									</div>
+								</div>
+							</div>																				
+						</div>			
+							
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label for="material_enviado">Material Enviado</label>
+								<div class="input-group mb-3">
+									<textarea id="material_enviado" name="material_enviado" placeholder="Material Enviado" class="form-control" maxlength="100" rows="4"></textarea>
+									<div class="input-group-append">				
+										<span class="input-group-text"><div class="sb-nav-link-icon"></div><i class="fas fa-file-medical fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="datos_clinicos">Datos Clinicos Relevantes</label>
+								<div class="input-group mb-3">
+									<textarea id="datos_clinicos" name="datos_clinicos" placeholder="Datos Clinicos Relevantes" class="form-control" maxlength="100" rows="4"></textarea>
+									<div class="input-group-append">				
+										<span class="input-group-text"><div class="sb-nav-link-icon"></div><i class="fas fa-file-medical fa-lg"></i></span>
+									</div>
+								</div>
+							</div>																				
+						</div>
+						
+						<div class="form-group">				  
+						  <div class="col-md-12">
+							<label for="mostrar_datos_clinicos" class="form-check-label mr-1">Mostrar Datos Clínicos</label>			
+							<label class="switch">
+								<input type="checkbox" id="mostrar_datos_clinicos" name="mostrar_datos_clinicos" value="1">
+								<div class="slider round"></div>
+							</label>
+							<span class="question mb-2" id="label_empresa_activo"></span>				
+						  </div>				  
+						</div>
+					</div>	
+				</div>
+				<div class="RespuestaAjax"></div> 
+			</form>
+		</div>	
+		<div class="modal-footer">
+			<button class="guardar btn btn-primary ml-2" type="submit" id="reg_admision" form="formulario_admision"><div class="sb-nav-link-icon"></div><i class="far fa-save fa-lg"></i> Registrar</button>						<button class="editar btn btn-warning ml-2" type="submit" id="edi_admision" form="formulario_admision"><div class="sb-nav-link-icon"></div><i class="fas fa-edit fa-lg"></i> Editar</button>
+			<button class="eliminar btn btn-danger ml-2" type="submit" id="delete_admision" form="formulario_admision"><div class="sb-nav-link-icon"></div><i class="fa fa-trash fa-lg"></i> Eliminar</button>
+		</div>			
+      </div>
+    </div>
+</div>
+<!--FIN MODAL ADMISION CLIENTES-->
+
+<!--INICIO ADMISION EMPRESAS-->
+<div class="modal fade" id="modal_admision_empesas">
+	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Registro Empresas</h4>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+        </div><div class="container"></div>
+        <div class="modal-body">		
+			<form class="FormularioAjax form-horizontal" id="formulario_admision_empresas" action="" method="POST" data-form="" enctype="multipart/form-data">				
+				<div class="card">
+					<div class="card-header text-white bg-info mb-3" align="center">
+						DATOS DE LA EMPRESA
+					</div>
+					<div class="card-body">
+						<div class="form-row">
+							<div class="col-md-8 mb-3">
+								<label for="name">Empresa <span class="priority">*<span/></label>
+								<input type="text" required id="empresa" name="empresa" placeholder="Empresa" class="form-control"/>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="rtn">RTN <span class="priority">*<span/></label>
+								<input type="number" required id="rtn" name="rtn" class="form-control" placeholder="Identidad o RTN" maxlength="14" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="0"/>
+							</div>										
+						</div>								
+						<div class="form-row">			  
+							<div class="col-md-12 mb-3">
+								<label for="direccion">Dirección</label>
+								<div class="input-group mb-3">
+									<textarea id="direccion" name="direccion" placeholder="Dirección " class="form-control" maxlength="100" rows="4"></textarea>
+									<div class="input-group-append">				
+										<span class="input-group-text"><div class="sb-nav-link-icon"></div><i class="fas fa-address-card fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>	
+						<div class="form-row">	
+							<div class="col-md-3 mb-3">
+								<label for="telefono">Teléfono</label>
+								<input type="number" id="telefono1" name="telefono1" class="form-control" placeholder="Teléfono" maxlength="8" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+							</div>										  
+							<div class="col-md-9 mb-3">
+							<label for="correo">Correo</label>
+							<input type="email" name="correo" id="correo" placeholder="alguien@algo.com" class="form-control" data-toggle="tooltip" data-placement="top" title="Este correo será utilizado para enviar las citas creadas y las reprogramaciones, como las notificaciones de las citas pendientes de los usuarios." maxlength="100"/><label id="validate"></label>
+							</div>
+						</div>												
+					</div>	
+					
+				</div>
+				<div class="RespuestaAjax"></div> 
+			</form>
+		</div>	
+		<div class="modal-footer">
+			<button class="guardar btn btn-primary ml-2" type="submit" id="reg_admisionemp" form="formulario_admision_empresas"><div class="sb-nav-link-icon"></div><i class="far fa-save fa-lg"></i> Registrar</button>
+			<button class="editar btn btn-warning ml-2" type="submit" id="edi_admisionemp" form="formulario_admision_empresas"><div class="sb-nav-link-icon"></div><i class="fas fa-edit fa-lg"></i> Editar</button>
+			<button class="eliminar btn btn-danger ml-2" type="submit" id="delete_admisionemp" form="formulario_admision_empresas"><div class="sb-nav-link-icon"></div><i class="fa fa-trash fa-lg"></i> Eliminar</button>
+		</div>			
+      </div>
+    </div>
+</div>
+<!--FIN MODAL ADMISION EMPRESAS-->

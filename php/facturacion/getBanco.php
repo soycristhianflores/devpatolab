@@ -6,7 +6,7 @@ include "../funtions.php";
 $mysqli = connect_mysqli();
 
 //CONSULTA LOS DATOS DE LA ENTIDAD CORPORACION
-$consulta = "SELECT * FROM banco";
+$consulta = "SELECT banco_id, nombre FROM banco";
 $result = $mysqli->query($consulta) or die($mysqli->error);			  
 
 if($result->num_rows>0){

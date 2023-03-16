@@ -38,6 +38,16 @@ if(isset($_POST['almacen'])){//COMPRUEBO SI LA VARIABLE ESTA DIFINIDA
 	$almacen = 0;
 }
 
+if(isset($_POST['categoria_producto'])){//COMPRUEBO SI LA VARIABLE ESTA DIFINIDA
+	if($_POST['categoria_producto'] == ""){
+		$tipo_muestra_id = 0;
+	}else{
+		$tipo_muestra_id = $_POST['categoria_producto'];
+	}
+}else{
+	$tipo_muestra_id = 0;
+}
+
 $concentracion = $_POST['concentracion'];
 $cantidad = $_POST['cantidad'];
 $precio_compra = $_POST['precio_compra'];
@@ -81,7 +91,7 @@ $result = $mysqli->query($query) or die($mysqli->error);
 if($result->num_rows==0){
 	$productos_id  = correlativo('productos_id  ', 'productos');
 	$insert = "INSERT INTO productos 
-		VALUES('$productos_id','$almacen','$medida','$concentracion','$nombre','$descripcion','$categoria','$cantidad','$precio_compra','$precio_venta','$precio_venta2','$precio_venta3','$precio_venta4','$cantidad_minima','$cantidad_maxima','$estado','$isv','$usuario','$fecha_registro')";
+		VALUES('$productos_id','$almacen','$medida','$concentracion','$nombre','$descripcion','$categoria','$cantidad','$precio_compra','$precio_venta','$precio_venta2','$precio_venta3','$precio_venta4','$cantidad_minima','$cantidad_maxima','$estado','$isv','$usuario','$fecha_registro','$tipo_muestra_id')";
 	$query = $mysqli->query($insert) or die($mysqli->error);
 
     if($query){

@@ -11,62 +11,45 @@ $hospitales = $_POST['hospitales'];
 $fecha = date("Y-m-d");
 $fecha_registro = date("Y-m-d H:i:s");
 
-//VERIFICAMOS SI EXSTE EL HOSPITAL
-$query = "SELECT hospitales_id
-	FROM hospitales
-	WHERE nombre = '$hospitales'";
-$result = $mysqli->query($query) or die($mysqli->error);
+$update = "UPDATE hospitales
+	SET
+		nombre = '$hospitales'
+	WHERE hospitales_id = '$hospitales_id'";
+$query = $mysqli->query($update) or die($mysqli->error);
 
-if($result->num_rows==0){
-	$update = "UPDATE hospitales
-		SET
-			nombre = '$hospitales'
-		WHERE hospitales_id = '$hospitales_id'";
-	$query = $mysqli->query($update) or die($mysqli->error);
-
-	if($query){
-		$datos = array(
-			0 => "Editado", 
-			1 => "Registro Editado Correctamente", 
-			2 => "success",
-			3 => "btn-primary",
-			4 => "formularioHospitales",
-			5 => "Editar",
-			6 => "Hospitales",//FUNCION DE LA TABLA QUE LLAMAREMOS PARA QUE ACTUALICE (DATATABLE BOOSTRAP)
-			7 => "modalHospitales", //Modals Para Cierre Automatico
-		);	
-		
-		/*********************************************************************************************************************************************************************/
-		//INGRESAR REGISTROS EN LA ENTIDAD HISTORIAL
-		$historial_numero = historial();
-		$estado_historial = "Agregar";
-		$observacion_historial = "Se ha modificado el hospital con codigo: $hospitales";
-		$modulo = "Hospitales";
-		$insert = "INSERT INTO historial 
-		   VALUES('$historial_numero','0','0','$modulo','$hospitales','$usuario','0','$fecha','$estado_historial','$observacion_historial','$usuario','$fecha_registro')";	 
-		$mysqli->query($insert) or die($mysqli->error);
-		/*********************************************************************************************************************************************************************/		
-		/*********************************************************************************************************************************************************************/		
-	}else{
-		$datos = array(
-			0 => "Error", 
-			1 => "No se puedo modificar este registro, los datos son incorrectos por favor corregir", 
-			2 => "error",
-			3 => "btn-danger",
-			4 => "",
-			5 => "",			
-		);	
-	}	
+if($query){
+	$datos = array(
+		0 => "Editado", 
+		1 => "Registro Editado Correctamente", 
+		2 => "success",
+		3 => "btn-primary",
+		4 => "formularioHospitales",
+		5 => "Editar",
+		6 => "Hospitales",//FUNCION DE LA TABLA QUE LLAMAREMOS PARA QUE ACTUALICE (DATATABLE BOOSTRAP)
+		7 => "modalHospitales", //Modals Para Cierre Automatico
+	);	
+	
+	/*********************************************************************************************************************************************************************/
+	//INGRESAR REGISTROS EN LA ENTIDAD HISTORIAL
+	$historial_numero = historial();
+	$estado_historial = "Agregar";
+	$observacion_historial = "Se ha modificado el hospital con codigo: $hospitales";
+	$modulo = "Hospitales";
+	$insert = "INSERT INTO historial 
+		VALUES('$historial_numero','0','0','$modulo','$hospitales','$usuario','0','$fecha','$estado_historial','$observacion_historial','$usuario','$fecha_registro')";	 
+	$mysqli->query($insert) or die($mysqli->error);
+	/*********************************************************************************************************************************************************************/		
+	/*********************************************************************************************************************************************************************/		
 }else{
 	$datos = array(
 		0 => "Error", 
-		1 => "Lo sentimos este registro ya existe no se puede modificar", 
+		1 => "No se puedo modificar este registro, los datos son incorrectos por favor corregir", 
 		2 => "error",
 		3 => "btn-danger",
 		4 => "",
-		5 => "",		
-	);
-}
+		5 => "",			
+	);	
+}	
 
 echo json_encode($datos);
 ?>

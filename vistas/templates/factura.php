@@ -37,7 +37,7 @@
 			  </div>
 			</div>
 		</div>
-		<label for="inputFecha" class="col-sm-1 col-form-label-md">Servicio <span class="priority">*<span/></label>
+		<label for="servicio_id" class="col-sm-1 col-form-label-md">Servicio <span class="priority">*<span/></label>
 		<div class="col-sm-3">
 			<div class="input-group mb-3">
 			  <select id="servicio_id" name="servicio_id" class="custom-select" data-toggle="tooltip" data-placement="top" title="Servicio" required></select>
@@ -45,12 +45,20 @@
 				<a data-toggle="modal" href="#" class="btn btn-outline-success" id="buscar_servicios"><div class="sb-nav-link-icon"></div><i class="fab fa-servicestack fa-lg"></i></a>
 			  </div>
 			</div>
-		</div>	
-		<label class="switch mb-2" data-toggle="tooltip" data-placement="top" title="Tipo de Factura, Contado o Crédito">
-			<input type="checkbox" id="facturas_activo" name="facturas_activo" value="1" checked>
-			<div class="slider round"></div>
-		</label>
-		<span class="question mb-2" id="label_facturas_activo"></span>		
+		</div>				
+	  </div>
+	  <div class="form-group row">
+	  	<label for="muestras_numero" class="col-sm-1 col-form-label-md">Muestra:</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="muestras_numero" name="muestras_numero" readonly>
+		</div>
+		<div class="col-sm-9">
+			<label class="switch mb-2" data-toggle="tooltip" data-placement="top" title="Tipo de Factura, Contado o Crédito">
+				<input type="checkbox" id="facturas_activo" name="facturas_activo" value="1" checked>
+				<div class="slider round"></div>
+			</label>
+			<span class="question mb-2" id="label_facturas_activo"></span>				
+		</div>			
 	  </div>
 	  <div class="form-group row" id="grupo_paciente_factura">
 		<label for="inputCliente" class="col-sm-1 col-form-label-md">Paciente <span class="priority">*<span/></label>

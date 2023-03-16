@@ -8,9 +8,8 @@ $(document).ready(function(){
 /*FIN DE FUNCIONES PARA ESTABLECER EL FOCUS PARA LAS VENTANAS MODALES*/
 
 $(document).ready(function() {
-	listar_hospitales_consulta();	
+	listar_hospitales_consulta();
 });	
-
 
 function agregarHospitales(){
 	if (getUsuarioSistema() == 1 || getUsuarioSistema() == 2 || getUsuarioSistema() == 3){
@@ -128,9 +127,6 @@ var edit_hospitales_consulta_dataTable = function(tbody, table){
 				$('#edi_hospitales').show();
 				$('#delete_hospitales').hide();
 				$('#formularioHospitales #hospitales').val(valores[0]);
-
-				//HABILITAR OBJETOS
-				$('#formularioHospitales #hospitales').attr("readonly", false);	
 				
 				$('#formularioHospitales #pro').val("Editar");
 				$('#modalHospitales').modal({
@@ -166,7 +162,7 @@ var delete_hospitales_consulta_dataTable = function(tbody, table){
 				$('#formularioHospitales #hospitales').val(valores[0]);
 
 				//DESHABILITAR OBJETOS
-				$('#formularioHospitales #hospitales').attr("readonly", true);				
+				$('#formularioHospitales #hospitales').attr("readonly", true);			
 				
 				$('#formularioHospitales #pro').val("Eliminar");
 				$('#modalHospitales').modal({

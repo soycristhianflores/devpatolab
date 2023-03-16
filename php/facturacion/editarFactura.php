@@ -8,7 +8,7 @@ $mysqli = connect_mysqli();
 $facturas_id = $_POST['facturas_id'];
 
 //CONSULTAR DATOS DEL METODO DE PAGO
-$query = "SELECT f.facturas_id AS facturas_id, DATE_FORMAT(f.fecha, '%d/%m/%Y') AS 'fecha', p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre,' ',p.apellido) AS 'empresa', p.identidad AS 'identidad', CONCAT(c.nombre,' ',c.apellido) AS 'profesional', f.colaborador_id AS 'colaborador_id', f.estado AS 'estado', s.nombre AS 'consultorio', f.servicio_id AS 'servicio_id', f.fecha AS 'fecha_factura', f.notas AS 'notas', CONCAT(p1.nombre,' ',p1.apellido) AS 'paciente'
+$query = "SELECT f.facturas_id AS facturas_id, DATE_FORMAT(f.fecha, '%d/%m/%Y') AS 'fecha', p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre,' ',p.apellido) AS 'empresa', p.identidad AS 'identidad', CONCAT(c.nombre,' ',c.apellido) AS 'profesional', f.colaborador_id AS 'colaborador_id', f.estado AS 'estado', s.nombre AS 'consultorio', f.servicio_id AS 'servicio_id', f.fecha AS 'fecha_factura', f.notas AS 'notas', CONCAT(p1.nombre,' ',p1.apellido) AS 'paciente', m.number AS 'number'
 	FROM facturas AS f
 	INNER JOIN pacientes AS p
 	ON f.pacientes_id = p.pacientes_id
@@ -16,6 +16,8 @@ $query = "SELECT f.facturas_id AS facturas_id, DATE_FORMAT(f.fecha, '%d/%m/%Y') 
 	ON f.servicio_id = s.servicio_id
 	INNER JOIN colaboradores AS c
 	ON f.colaborador_id = c.colaborador_id
+	INNER JOIN muestras AS m
+	ON f.muestras_id = m.muestras_id
 	LEFT JOIN muestras_hospitales AS mh
 	ON f.muestras_id = mh.muestras_id
 	LEFT JOIN pacientes AS p1
@@ -32,6 +34,7 @@ $servicio_id = "";
 $fecha_factura = "";
 $notas = "";
 $paciente = "";
+$number = "";
 
 //OBTENEMOS LOS VALORES DEL REGISTRO
 if($result->num_rows>0){
@@ -42,7 +45,8 @@ if($result->num_rows>0){
 	$servicio_id = $consulta_registro['servicio_id'];
 	$fecha_factura = $consulta_registro['fecha_factura'];
 	$notas = $consulta_registro['notas'];	
-	$paciente = $consulta_registro['paciente'];		
+	$paciente = $consulta_registro['paciente'];	
+	$number = $consulta_registro['number'];		
 }
 
 $datos = array(
@@ -53,7 +57,8 @@ $datos = array(
 	 4 => $profesional, 	 
 	 5 => $servicio_id, 
 	 6 => $notas, 	
-	 7 => $paciente, 		 
+	 7 => $paciente, 
+	 8 => $number,			 
 );	
 	
 echo json_encode($datos);
