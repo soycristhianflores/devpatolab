@@ -104,9 +104,27 @@ $('.FormularioAjax').submit(function(e){
 				llenarTabla(datos[6]);
 				
 				if (datos[6] == "formEmpresas"){
-					getEmpresa();
-					getHospitales();				
+					pagination(1);
+					getEmpresa();			
 				}
+
+				if (datos[6] == "formPacientesAdmisionEditar"){
+					getGenero();	
+					pagination(1);			
+				}	
+
+				if (datos[6] == "formPacientesAdmision"){
+					getGenero();
+					getTipo();
+					getTipoMuestra();
+					getEmpresa();
+					getRemitente();
+					getHospitales();
+					getCategorias();
+					getServicio();
+					getClientes();		
+					pagination(1);			
+				}				
 
 				if (datos[6] == "AtencionMedica"){
 					printReport(datos[8]);//LLAMAMOS A LA FUNCION IMPRIMIR REPORTE DE LABORATORIO .-Función se encuenta en myjava_atencion_medica.js

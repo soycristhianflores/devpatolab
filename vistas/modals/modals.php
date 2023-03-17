@@ -2159,22 +2159,30 @@
 					</div>
 					<div class="card-body">
 						<div class="form-row">
+							<div class="col-md-3 mb-3">
+								<label for="cliente_admision">Cliente</label>			
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="cliente_admision" name="cliente_admision" data-live-search="true" title="Cliente" data-size="10">			  
+									</select>
+								</div>
+							</div>	
+
 							<div class="col-md-4 mb-3">
-								<label for="name">Nombre <span class="priority">*<span/></label>
+								<label for="name">Nombres <span class="priority">*<span/></label>
 								<input type="text" required id="name" name="name" placeholder="Nombre" class="form-control"/>
 							</div>
 							<div class="col-md-4 mb-3">
-								<label for="lastname">Apellido <span class="priority">*<span/></label>
+								<label for="lastname">Apellidos <span class="priority">*<span/></label>
 								<input type="text" required id="lastname" name="lastname" placeholder="Apellido" class="form-control"/>
-							</div>
-							<div class="col-md-4 mb-3">
-								<label for="rtn">Identidad o RTN <span class="priority">*<span/></label>
-								<input type="number" required id="rtn" name="rtn" class="form-control" placeholder="Identidad o RTN" maxlength="14" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="0"/>
 							</div>										
 						</div>					
 						
-						<div class="form-row">				
-							<div class="col-md-3 mb-3">							
+						<div class="form-row">	
+							<div class="col-md-3 mb-3">
+								<label for="rtn">Identidad o RTN <span class="priority">*<span/></label>
+								<input type="number" required id="rtn" name="rtn" class="form-control" placeholder="Identidad o RTN" maxlength="14" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="0"/>
+							</div>										
+							<div class="col-md-3 mb-3" style="display: none;">							
 								<label for="fecha_nac">Fecha de Nacimiento</label>
 								<input type="date" required id="fecha_nac" name="fecha_nac" value="<?php echo date ("Y-m-d");?>" class="form-control"/>
 							</div>
@@ -2331,8 +2339,89 @@
 			</form>
 		</div>	
 		<div class="modal-footer">
-			<button class="guardar btn btn-primary ml-2" type="submit" id="reg_admision" form="formulario_admision"><div class="sb-nav-link-icon"></div><i class="far fa-save fa-lg"></i> Registrar</button>						<button class="editar btn btn-warning ml-2" type="submit" id="edi_admision" form="formulario_admision"><div class="sb-nav-link-icon"></div><i class="fas fa-edit fa-lg"></i> Editar</button>
-			<button class="eliminar btn btn-danger ml-2" type="submit" id="delete_admision" form="formulario_admision"><div class="sb-nav-link-icon"></div><i class="fa fa-trash fa-lg"></i> Eliminar</button>
+			<button class="guardar btn btn-primary ml-2" type="submit" id="reg_admision" form="formulario_admision"><div class="sb-nav-link-icon"></div><i class="far fa-save fa-lg"></i> Registrar</button>		
+		</div>			
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_admision_clientes_editar">
+	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Registro Clientes</h4>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+        </div><div class="container"></div>
+        <div class="modal-body">		
+			<form class="FormularioAjax form-horizontal" id="formulario_admision_clientes_editar" action="" method="POST" data-form="" enctype="multipart/form-data">				
+				<div class="card">
+					<div class="card-header text-white bg-info mb-3" align="center">
+						DATOS DEL CLIENTE
+					</div>
+					<div class="card-body">
+						<div class="form-row">
+							<input type="hidden" required id="pacientes_id" name="pacientes_id" class="form-control"/>
+							<div class="col-md-6 mb-3">
+								<label for="name">Nombres <span class="priority">*<span/></label>
+								<input type="text" required id="name" name="name" placeholder="Nombre" class="form-control"/>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="lastname">Apellidos <span class="priority">*<span/></label>
+								<input type="text" required id="lastname" name="lastname" placeholder="Apellido" class="form-control"/>
+							</div>										
+						</div>					
+						
+						<div class="form-row">	
+							<div class="col-md-3 mb-3">
+								<label for="rtn">Identidad o RTN <span class="priority">*<span/></label>
+								<input type="number" required id="rtn" name="rtn" class="form-control" placeholder="Identidad o RTN" maxlength="14" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="0"/>
+							</div>										
+							<div class="col-md-3 mb-3" style="display: none;">							
+								<label for="fecha_nac">Fecha de Nacimiento</label>
+								<input type="date" required id="fecha_nac" name="fecha_nac" value="<?php echo date ("Y-m-d");?>" class="form-control"/>
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="edad">Edad</label>
+								<input type="number" id="edad" name="edad" class="form-control" placeholder="Edad" maxlength="8" />
+							</div>												
+							<div class="col-md-3 mb-3">
+								<label for="telefono">Teléfono</label>
+								<input type="number" id="telefono1" name="telefono1" class="form-control" placeholder="Teléfono" maxlength="8" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+							</div>	
+							<div class="col-md-3 mb-3">
+								<label for="genero">Genero <span class="priority">*<span/></label>			
+								<div class="input-group mb-3">
+									<select class="selectpicker" id="genero" name="genero" required data-live-search="true" title="Genero">			  
+									</select>
+								</div>
+							</div>															
+						</div>				
+						<div class="form-row">			  
+							<div class="col-md-12 mb-3">
+								<label for="direccion">Dirección</label>
+								<div class="input-group mb-3">
+									<textarea id="direccion" name="direccion" placeholder="Dirección " class="form-control" maxlength="100" rows="4"></textarea>
+									<div class="input-group-append">				
+										<span class="input-group-text"><div class="sb-nav-link-icon"></div><i class="fas fa-address-card fa-lg"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>	
+						<div class="form-row">			  
+							<div class="col-md-12 mb-3">
+							<label for="correo">Correo</label>
+							<input type="email" name="correo" id="correo" placeholder="alguien@algo.com" class="form-control" data-toggle="tooltip" data-placement="top" title="Este correo será utilizado para enviar las citas creadas y las reprogramaciones, como las notificaciones de las citas pendientes de los usuarios." maxlength="100"/><label id="validate"></label>
+							</div>
+						</div>	
+					</div>	
+				</div>
+				<div class="RespuestaAjax"></div> 
+			</form>
+		</div>	
+		<div class="modal-footer">
+			<button class="editar btn btn-warning ml-2" type="submit" id="edi_admision" form="formulario_admision_clientes_editar"><div class="sb-nav-link-icon"></div><i class="fas fa-edit fa-lg"></i> Editar</button>
 		</div>			
       </div>
     </div>

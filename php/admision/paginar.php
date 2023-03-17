@@ -6,18 +6,25 @@ include "../funtions.php";
 $mysqli = connect_mysqli();
 
 $paginaActual = $_POST['partida'];
+$dato = $_POST['dato'];
 
-$query = "SELECT m.muestras_id, m.fecha AS 'fecha', CONCAT(p.nombre, ' ', p.apellido) AS 'nombre', p.edad, m.number AS 'numero', tp.nombre AS 'tipo', f.number AS 'factura', sf.prefijo AS 'prefijo', sf.relleno AS 'relleno'
+if($_POST['tipo'] == ""){
+	$tipo = "1";
+}else{
+	$tipo = $_POST['tipo'];
+}
+
+if($_POST['estado'] == ""){
+	$estado = "1";
+}else{
+	$estado = $_POST['estado'];
+}
+
+$query = "SELECT p.pacientes_id, CONCAT(p.nombre, ' ', p.apellido) AS 'nombre', p.edad, p.telefono1 AS 'telefono', p.email AS 'correo', p.localidad AS 'direccion'
 	FROM pacientes AS p
-	INNER JOIN muestras AS m
-	ON p.pacientes_id = m.pacientes_id
-	INNER JOIN tipo_muestra AS tp
-	ON m.tipo_muestra_id = tp.tipo_muestra_id
-	LEFT JOIN facturas AS f
-	ON m.muestras_id = f.muestras_id
-	LEFT JOIN secuencia_facturacion AS sf
-	ON f.secuencia_facturacion_id = sf.secuencia_facturacion_id
-	WHERE p.tipo_paciente_id = 1";  
+	WHERE p.estado = '$estado' AND p.tipo_paciente_id = '$tipo' AND (expediente LIKE '$dato%' OR nombre LIKE '$dato%' OR apellido LIKE '$dato%' OR CONCAT(apellido,' ',nombre) LIKE '%$dato%' OR CONCAT(nombre,' ',apellido) LIKE '%$dato%' OR telefono1 LIKE '$dato%' OR identidad LIKE '$dato%')
+	ORDER BY p.pacientes_id";  
+
 $result = $mysqli->query($query);
    
 $nroLotes = 15;
@@ -48,58 +55,43 @@ if($paginaActual <= 1){
 	$limit = $nroLotes*($paginaActual-1);
 }
 
-$registro = "SELECT m.muestras_id, m.fecha AS 'fecha', CONCAT(p.nombre, ' ', p.apellido) AS 'nombre', p.edad, m.number AS 'numero', tp.nombre AS 'tipo', f.number AS 'factura', sf.prefijo AS 'prefijo', sf.relleno AS 'relleno'
+$registro = "SELECT p.pacientes_id, CONCAT(p.nombre, ' ', p.apellido) AS 'nombre', p.edad, p.telefono1 AS 'telefono', p.email AS 'correo', p.localidad AS 'direccion'
 	FROM pacientes AS p
-	INNER JOIN muestras AS m
-	ON p.pacientes_id = m.pacientes_id
-	INNER JOIN tipo_muestra AS tp
-	ON m.tipo_muestra_id = tp.tipo_muestra_id
-	LEFT JOIN facturas AS f
-	ON m.muestras_id = f.muestras_id
-	LEFT JOIN secuencia_facturacion AS sf
-	ON f.secuencia_facturacion_id = sf.secuencia_facturacion_id
-	WHERE p.tipo_paciente_id = 1
-    ORDER BY m.muestras_id LIMIT $limit, $nroLotes";
+	WHERE p.estado = '$estado' AND  p.tipo_paciente_id = '$tipo' AND (expediente LIKE '$dato%' OR nombre LIKE '$dato%' OR apellido LIKE '$dato%' OR CONCAT(apellido,' ',nombre) LIKE '%$dato%' OR CONCAT(nombre,' ',apellido) LIKE '%$dato%' OR telefono1 LIKE '$dato%' OR identidad LIKE '$dato%')
+    ORDER BY p.pacientes_id LIMIT $limit, $nroLotes";
   
 $result = $mysqli->query($registro);
 
 $tabla = $tabla.'<table class="table table-striped table-condensed table-hover">
 		  <tr>
-			<th width="2%">N°</th>
-			<th width="8%">Fecha</th>
-			<th width="19%">Cliente</th>
-			<th width="4%">Edad</th>
-			<th width="15%">Numero Muestra</th>
-			<th width="10%">Tipo</th>	
-			<th width="18%">Factura</th>				
-			<th width="8%">Ver Mas</th>
-			<th width="8%">Editar</th>
-			<th width="8%">Eliminar</th>
+			<th width="2.11%">N°</th>
+			<th width="20.11%">Cliente</th>
+			<th width="11.11%">Edad</th>
+			<th width="11.11%">Teléfono</th>
+			<th width="11.11%">Correo</th>	
+			<th width="20.11%">direccion</th>						
+			<th width="8.11%">Ver Mas</th>
+			<th width="8.11%">Editar</th>
+			<th width="8.11%">Eliminar</th>
 		   </tr>';
 			
 $i=1;			
 while($registro2 = $result->fetch_assoc()){
-	$no_factura = "";
-	if($registro2['numero'] != "" || $registro2['numero'] != 0){
-		$no_factura = $registro2['prefijo'].''.str_pad($registro2['factura'], $registro2['relleno'], "0", STR_PAD_LEFT);
-	}
-        
 	$tabla = $tabla.'<tr>
 	   <td>'.$i.'</td>		
-	   <td>'.$registro2['fecha'].'</td>
 	   <td>'.$registro2['nombre'].'</td>   
-	   <td>'.$registro2['edad'].'</td>	   
-	   <td>'.$registro2['numero'].'</td>
-	   <td>'.$registro2['tipo'].'</td>	   
-	   <td>'.$no_factura.'</td>
+	   <td>'.$registro2['edad'].'</td>  
+	   <td>'.$registro2['telefono'].'</td>   
+	   <td>'.$registro2['correo'].'</td>  
+	   <td>'.$registro2['direccion'].'</td>     
 	   <td>
-	   		<a class="btn btn btn-secondary ml-2" href="javascript:ModalVerMas('.$registro2['muestras_id'].');void(0);"><div class="sb-nav-link-icon"></div><i class="fas fa-eye fa-lg"></i> Ver Más</a>
+	   		<a class="btn btn btn-secondary ml-2" href="javascript:ModalVerMas('.$registro2['pacientes_id'].');void(0);"><div class="sb-nav-link-icon"></div><i class="fas fa-eye fa-lg"></i> Ver Más</a>
 	   </td>
 	   <td>
-	   		<a class="btn btn btn-secondary ml-2" href="javascript:ModalEditar('.$registro2['muestras_id'].');void(0);"><div class="sb-nav-link-icon"></div><i class="fas fa-user-edit fa-lg"></i> Editar</a>
+	   		<a class="btn btn btn-secondary ml-2" href="javascript:editarRegistro('.$registro2['pacientes_id'].');void(0);"><div class="sb-nav-link-icon"></div><i class="fas fa-user-edit fa-lg"></i> Editar</a>
 	   </td>
 	   <td>
-	   		<a class="btn btn btn-secondary ml-2" href="javascript:modal_eliminar('.$registro2['muestras_id'].');void(0);"><div class="sb-nav-link-icon"></div><i class="fas fa-trash fa-lg"></i> Eliminar</a>
+	   		<a class="btn btn btn-secondary ml-2" href="javascript:modal_eliminar('.$registro2['pacientes_id'].');void(0);"><div class="sb-nav-link-icon"></div><i class="fas fa-trash fa-lg"></i> Eliminar</a>
 	   </td>	   	   		   	   
   </tr>';		
   $i++;

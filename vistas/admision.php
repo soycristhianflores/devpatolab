@@ -99,8 +99,8 @@ $mysqli->close();//CERRAR CONEXIÓN
 <br><br><br>
 <div class="container-fluid">
 	<ol class="breadcrumb mt-2 mb-4">
-		<li class="breadcrumb-item"><a class="breadcrumb-link" href="inicio.php">Dashboard</a></li>
-		<li class="breadcrumb-item active" id="acciones_factura"><span id="label_acciones_factura"></span>Clientes</li>
+	<li class="breadcrumb-item" id="acciones_atras"><a id="ancla_volver" class="breadcrumb-link" href="#">Clientes</a></li>
+		<li class="breadcrumb-item active" id="acciones_factura"><span id="label_acciones_factura"></span></li>
 	</ol>
 
     <div id="main_facturacion">
@@ -108,8 +108,17 @@ $mysqli->close();//CERRAR CONEXIÓN
 			<div class="form-group mx-sm-3 mb-1">
 				<div class="input-group">
 					<div class="input-group-append">
+						<span class="input-group-text"><div class="sb-nav-link-icon"></div>Estado</span>
+						<select id="estado" name="estado" class="selectpicker" title="Estado" data-live-search="true">
+						</select>
+					</div>	
+				</div>
+			</div>
+			<div class="form-group mx-sm-3 mb-1">
+				<div class="input-group">
+					<div class="input-group-append">
 						<span class="input-group-text"><div class="sb-nav-link-icon"></div>Tipo</span>
-						<select id="tipo" name="tipo" class="selectpicker" title="Estado" data-live-search="true">
+						<select id="tipo" name="tipo" class="selectpicker" title="Tipo" data-live-search="true">
 						</select>
 					</div>	
 				</div>

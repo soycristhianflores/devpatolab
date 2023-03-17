@@ -9,8 +9,24 @@ $(document).ready(function(){
     getHospitales();
     getCategorias();
 	getServicio();
+	getClientesAdmision();
+	getTipoPacienteSelect();
 
-	$('#form_main #bs_regis').on('keyup',function(){
+	$('#form_main_admision #tipo').val(1);
+	$('#form_main_admision #tipo').selectpicker('refresh');
+
+	$('#form_main_admision #estado').val(1);
+	$('#form_main_admision #estado').selectpicker('refresh');
+
+	$('#form_main_admision #bs_regis').on('keyup',function(){
+		pagination(1);
+	});
+
+	$('#form_main_admision #estado').on('change',function(){
+		pagination(1);
+	});
+
+	$('#form_main_admision #tipo').on('change',function(){
 		pagination(1);
 	});
 
@@ -23,6 +39,12 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#modal_admision_clientes").on('shown.bs.modal', function(){
         $(this).find('#formulario_admision #name').focus();
+    });
+});
+
+$(document).ready(function(){
+    $("#modal_admision_clientes_editar").on('shown.bs.modal', function(){
+        $(this).find('#formulario_admision_clientes_editar #name').focus();
     });
 });
 
@@ -61,8 +83,6 @@ function getTipoMuestra(){
    return false;
 }
 
-
-
 function getGenero(){
   var url = '<?php echo SERVERURL; ?>php/admision/getSexo.php';
   $.ajax({
@@ -72,10 +92,29 @@ function getGenero(){
 			$('#formulario_admision #genero').html("");
 			$('#formulario_admision #genero').html(data);
 			$('#formulario_admision #genero').selectpicker('refresh');
+
+			$('#formulario_admision_clientes_editar #genero').html("");
+			$('#formulario_admision_clientes_editar #genero').html(data);
+			$('#formulario_admision_clientes_editar #genero').selectpicker('refresh');			
 		}
    });
    return false;
 }
+
+function getClientesAdmision(){
+  var url = '<?php echo SERVERURL; ?>php/admision/getClientes.php';
+  $.ajax({
+ 	 type:'POST',
+	 url:url,
+		success: function(data){
+			$('#formulario_admision #cliente_admision').html("");
+			$('#formulario_admision #cliente_admision').html(data);
+			$('#formulario_admision #cliente_admision').selectpicker('refresh');
+		}
+   });
+   return false;
+}
+
 
 function getEmpresa(){
   var url = '<?php echo SERVERURL; ?>php/admision/getEmpresa.php';
@@ -164,6 +203,20 @@ function getCategorias(){
    return false;
 }
 
+function getTipoPacienteSelect(){
+  var url = '<?php echo SERVERURL; ?>php/admision/getTipoPaciente.php';
+  $.ajax({
+ 	 type:'POST',
+	 url:url,
+		success: function(data){
+			$('#form_main_admision #tipo').html("");
+			$('#form_main_admision #tipo').html(data);
+			$('#form_main_admision #tipo').selectpicker('refresh');
+		}
+   });
+   return false;
+}
+
 function getFechaActual(){
 	var url = '<?php echo SERVERURL; ?>php/admision/getFechaActual.php';
 	var fecha_actual;
@@ -195,6 +248,30 @@ function getTipoPaciente(pacientes_id){
 	return tipo_paciente;
 }
 
+
+$('#formulario_admision #cliente_admision').on('change', function(){
+	var url = '<?php echo SERVERURL; ?>php/admision/consultarClientes.php';
+
+	$.ajax({
+	    type:'POST',
+		url:url,
+		data:'pacientes_id='+$('#formulario_admision #cliente_admision').val(),
+		async: false,
+		success:function(data){
+			var valores = eval(data);
+			$('#formulario_admision #name').val(valores[0]);
+			$('#formulario_admision #lastname').val(valores[1]);
+			$('#formulario_admision #rtn').val(valores[2]);
+			$('#formulario_admision #edad').val(valores[3]);
+			$('#formulario_admision #telefono1').val(valores[4]);
+			$('#formulario_admision #genero').val(valores[5]);
+			$('#formulario_admision #genero').selectpicker('refresh');
+			$('#formulario_admision #direccion').val(valores[6]);
+			$('#formulario_admision #correo').val(valores[7]);								
+		}
+	});
+});
+
 $('#formulario_admision #tipo_muestra').on('change', function(){
 	var url = '<?php echo SERVERURL; ?>php/admision/getProductos.php';
 
@@ -212,18 +289,15 @@ $('#formulario_admision #tipo_muestra').on('change', function(){
 
 function pagination(partida){
 	var url = '<?php echo SERVERURL; ?>php/admision/paginar.php';
-    var fechai = $('#form_main_admision #fecha_i').val();
-	var fechaf = $('#form_main_admision #fecha_f').val();
-	var estado = '';
-	var pacientesIDGrupo = '';	
-	var tipo_muestra = '';
-	var dato = '';
+    var tipo = $('#form_main_admision #tipo').val();
+	var dato = $('#form_main_admision #bs_regis').val();
+	var estado = $('#form_main_admision #estado').val();
 
 	$.ajax({
 		type:'POST',
 		url:url,
 		async: true,
-		data:'partida='+partida+'&fechai='+fechai+'&fechaf='+fechaf,
+		data:'partida='+partida+'&tipo='+tipo+'&dato='+dato+'&estado='+estado,
 		success:function(data){
 			var array = eval(data);
 			$('#agrega-registros').html(array[0]);
@@ -238,14 +312,228 @@ $('#form_main_admision #registrar_cliente').on('click', function(e){
 	modalClientes();
 });
 
+function consultarExpediente(pacientes_id){	
+    var url = '<?php echo SERVERURL; ?>php/pacientes/getExpedienteInformacion.php';
+	var resp;
+		
+	$.ajax({
+	    type:'POST',
+		url:url,
+		data:'pacientes_id='+pacientes_id,
+		async: false,
+		success:function(data){	
+          resp = data;			  		  		  			  
+		}
+	});
+	return resp;		
+}
+
+function consultarNombre(pacientes_id){	
+    var url = '<?php echo SERVERURL; ?>php/pacientes/getNombre.php';
+	var resp;
+		
+	$.ajax({
+	    type:'POST',
+		url:url,
+		data:'pacientes_id='+pacientes_id,
+		async: false,
+		success:function(data){	
+          resp = data;			  		  		  			  
+		}
+	});
+	return resp;	
+}
+
+function eliminarRegistro(pacientes_id){	
+	var url = '<?php echo SERVERURL; ?>php/pacientes/eliminar.php';
+	$.ajax({
+		type:'POST',
+		url:url,
+		data:'id='+pacientes_id,
+		success: function(registro){
+			if(registro == 1){
+				swal({
+					title: "Success", 
+					text: "Registro eliminado correctamente",
+					type: "success",
+					timer: 3000, //timeOut for auto-clos
+				});	
+				pagination(1);
+			   return false;				
+			}else if(registro == 2){	
+				swal({
+					title: "Error", 
+					text: "No se puede eliminar este registro",
+					type: "error", 
+					confirmButtonClass: 'btn-danger'
+				});		
+	           return false;				
+			}else if(registro == 3){	
+				swal({
+					title: "Error", 
+					text: "No se puede eliminar este registro, cuenta con información almacenada",
+					type: "error", 
+					confirmButtonClass: 'btn-danger'
+				});		
+	           return false;				
+			}else{
+				swal({
+					title: "Error", 
+					text: "Error al completar el registro",
+					type: "error", 
+					confirmButtonClass: 'btn-danger'
+				});				   
+	           return false;				
+			}
+  		}
+	}); 
+	return false;
+}
+
+function modal_eliminar(pacientes_id){
+  if (consultarExpediente(pacientes_id) != 0 && (getUsuarioSistema() == 1 || getUsuarioSistema() == 2 || getUsuarioSistema() == 3)){
+    var nombre_usuario = consultarNombre(pacientes_id);
+    var expediente_usuario = consultarExpediente(pacientes_id);
+    var dato;
+
+    if(expediente_usuario == 0){
+		dato = nombre_usuario;
+	}else{
+		dato = nombre_usuario + " (Expediente: " + expediente_usuario + ")";
+	}
+	
+	swal({
+	  title: "¿Estas seguro?",
+	  text: "¿Desea eliminar este registro: " + dato + "?",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonClass: "btn-warning",
+	  confirmButtonText: "¡Sí, eliminar el registro!",
+	  cancelButtonText: "Cancelar",
+	  closeOnConfirm: false
+	},
+	function(){
+		eliminarRegistro(pacientes_id);
+	});
+  }else if (consultarExpediente(pacientes_id) == 0 && (getUsuarioSistema() == 1 || getUsuarioSistema() == 2 || getUsuarioSistema() == 3)){
+    var nombre_usuario = consultarNombre(pacientes_id);
+    var expediente_usuario = consultarExpediente(pacientes_id);
+    var dato;
+
+    if(expediente_usuario == 0){
+		dato = nombre_usuario;
+	}else{
+		dato = nombre_usuario + " (Expediente: " + expediente_usuario + ")";
+	}
+	
+	swal({
+	  title: "¿Estas seguro?",
+	  text: "¿Desea eliminar este registro: " + dato + "?",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonClass: "btn-warning",
+	  confirmButtonText: "¡Sí, eliminar el registro!",
+	  cancelButtonText: "Cancelar",	  
+	  closeOnConfirm: false
+	},
+	function(){
+		eliminarRegistro(pacientes_id);
+	});
+  }else{
+	  swal({
+			title: 'Acceso Denegado', 
+			text: 'No tiene permisos para ejecutar esta acción',
+			type: 'error', 
+			confirmButtonClass: 'btn-danger'
+	  });				
+	 return false;	  
+  }
+}
+
+function editarRegistro(pacientes_id){
+	if (getUsuarioSistema() == 1 || getUsuarioSistema() == 2 || getUsuarioSistema() == 3){
+		if($('#form_main_admision #tipo').val() == 1 || $('#form_main_admision #tipo').val() == ""){
+			var url = '<?php echo SERVERURL; ?>php/admision/consultarClientes.php';
+
+			$.ajax({
+				type:'POST',
+				url:url,
+				data:'pacientes_id='+pacientes_id,
+				success: function(valores){
+					var datos = eval(valores);
+					$('#formulario_admision_clientes_editar #edi_admision').show();	
+					$('#formulario_admision_clientes_editar #pacientes_id').val(pacientes_id);					
+					$('#formulario_admision_clientes_editar #name').val(datos[0]);
+					$('#formulario_admision_clientes_editar #lastname').val(datos[1]);
+					$('#formulario_admision_clientes_editar #rtn').val(datos[2]);
+					$('#formulario_admision_clientes_editar #edad').val(datos[3]);
+					$('#formulario_admision_clientes_editar #telefono1').val(datos[4]);
+					$('#formulario_admision_clientes_editar #genero').val(datos[5]);
+					$('#formulario_admision_clientes_editar #genero').selectpicker('refresh');
+					$('#formulario_admision_clientes_editar #direccion').val(datos[6]);
+					$('#formulario_admision_clientes_editar #correo').val(datos[7]);						
+
+
+					$('#formulario_admision_clientes_editar').attr({ 'data-form': 'update' }); 
+					$('#formulario_admision_clientes_editar').attr({ 'action': '<?php echo SERVERURL; ?>php/admision/modificarRegistro.php' });						
+					
+					//HABILITAR OBJETOS
+					$('#formulario_admision_clientes_editar #name').attr('readonly', false);
+					$('#formulario_admision_clientes_editar #lastname').attr('readonly', false);
+					$('#formulario_admision_clientes_editar #rtn').attr('readonly', false);
+					$('#formulario_admision_clientes_editar #fecha_nac').attr('disabled', false);
+					$('#formulario_admision_clientes_editar #edad').attr('readonly', false);
+					$('#formulario_admision_clientes_editar #telefono1').attr('readonly', false);
+					$('#formulario_admision_clientes_editar #genero').attr('disabled', false);
+					$('#formulario_admision_clientes_editar #direccion').attr('readonly', false);
+					$('#formulario_admision_clientes_editar #correo').attr('readonly', false);
+
+					$('#modal_admision_clientes_editar').modal({
+						show:true,
+						keyboard: false,
+						backdrop:'static'
+					});
+					return false;
+				}
+			});	
+		}else{
+
+		}
+	}else{
+		swal({
+			title: 'Acceso Denegado', 
+			text: 'No tiene permisos para ejecutar esta acción',
+			type: 'error', 
+			confirmButtonClass: 'btn-danger'
+		});				
+		return false;			
+	}
+}
+
+function modalEditar(pacientes_id){
+	$('#formulario_admision_clientes_editar').attr({ 'data-form': 'update' });
+	$('#formulario_admision_clientes_editar').attr({ 'action': '<?php echo SERVERURL; ?>php/admision/agregarRegistro.php' });
+	$('#formulario_admision_clientes_editar')[0].reset();
+	$('#formulario_admision_clientes_editar #pro_admision').val("Registro");
+	$('#reg_admision').show();
+	$('#edi_admision').hide();
+	$('#delete_admision').hide();
+
+	$('#formulario_admision_clientes_editar #paciente_tipo').val(1);
+	$('#formulario_admision_clientes_editar #paciente_tipo').selectpicker('refresh');
+	
+	$('#formulario_admision #hospital').val(56);
+	$('#formulario_admision #hospital').selectpicker('refresh');	
+
+
+}
+
 function modalClientes(){
 	$('#formulario_admision').attr({ 'data-form': 'save' });
 	$('#formulario_admision').attr({ 'action': '<?php echo SERVERURL; ?>php/admision/agregarRegistro.php' });
 	$('#formulario_admision')[0].reset();
 	$('#formulario_admision #pro_admision').val("Registro");
 	$('#reg_admision').show();
-	$('#edi_admision').hide();
-	$('#delete_admision').hide();
 
 	$('#formulario_admision #paciente_tipo').val(1);
 	$('#formulario_admision #paciente_tipo').selectpicker('refresh');
@@ -258,22 +546,22 @@ function modalClientes(){
 	$('#formulario_admision #lastname').attr('readonly', false);
 	$('#formulario_admision #rtn').attr('readonly', false);
 	$('#formulario_admision #fecha_nac').attr('disabled', false);
-   $('#formulario_admision #edad').attr('readonly', false);
+    $('#formulario_admision #edad').attr('readonly', false);
 	$('#formulario_admision #telefono1').attr('readonly', false);
 	$('#formulario_admision #genero').attr('disabled', false);
-   $('#formulario_admision #direccion').attr('readonly', false);
+    $('#formulario_admision #direccion').attr('readonly', false);
 	$('#formulario_admision #correo').attr('readonly', false);
-   $('#formulario_admision #hospital').attr('disabled', false);
+    $('#formulario_admision #hospital').attr('disabled', false);
 	$('#formulario_admision #empresa').attr('disabled', false);
-   $('#formulario_admision #referencia').attr('readonly', false);
+    $('#formulario_admision #referencia').attr('readonly', false);
 	$('#formulario_admision #tipo_muestra').attr('disabled', false);
-   $('#formulario_admision #remitente').attr('readonly', false);
+    $('#formulario_admision #remitente').attr('readonly', false);
 	$('#formulario_admision #categoria').attr('disabled', false);
-   $('#formulario_admision #sitio_muestra').attr('readonly', false);
+    $('#formulario_admision #sitio_muestra').attr('readonly', false);
 	$('#formulario_admision #diagnostico_clinico').attr('readonly', false);
 	$('#formulario_admision #material_enviado').attr('readonly', false);
-   $('#formulario_admision #datos_clinicos').attr('readonly', false);
-   $('#formulario_admision #mostrar_datos_clinicos').attr('disabled', false);
+    $('#formulario_admision #datos_clinicos').attr('readonly', false);
+    $('#formulario_admision #mostrar_datos_clinicos').attr('disabled', false);
 
 	$('#modal_admision_clientes').modal({
 		show:true,
@@ -344,6 +632,18 @@ function formFactura(){
 	 $('.footer').show();
      $('.footer1').hide();	 
 }
+
+$('#formulario_facturacion #validar').on('click', function(e){
+	$('#formulario_facturacion').attr({ 'data-form': 'save' });
+	$('#formulario_facturacion').attr({ 'action': '<?php echo SERVERURL; ?>php/facturacion/addPreFactura.php' });
+	$("#formulario_facturacion").submit();
+});
+
+$('#formulario_facturacion #cobrar').on('click', function(e){
+	$('#formulario_facturacion').attr({ 'data-form': 'save' });
+	$('#formulario_facturacion').attr({ 'action': '<?php echo SERVERURL; ?>php/facturacion/addFactura.php' });
+	$("#formulario_facturacion").submit();
+});
 
 function volver(){
 	$('#main_facturacion').show();

@@ -673,7 +673,8 @@ function pagination(partida){
 	return false;
 }
 
-$('#acciones_atras').on('click', function(e){
+$('#ancla_volver').on('click', function(e){
+	alert("Me haz pinchado");
 	 e.preventDefault();
 	 if($('#formulario_facturacion #cliente_nombre').val() != "" || $('#formulario_facturacion #colaborador_nombre').val() != ""){
 		swal({
