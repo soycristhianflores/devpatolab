@@ -650,6 +650,11 @@ $('#acciones_atras').on('click', function(e){
 	volver()
 });
 
+$('#registrar_productos').on('click', function(e){
+	e.preventDefault();
+	agregarProductos()
+});
+
 function volver(){
 	$('#main_facturacion').show();
 	$('#label_acciones_factura').html("");

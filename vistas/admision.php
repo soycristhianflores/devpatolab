@@ -134,7 +134,7 @@ $mysqli->close();//CERRAR CONEXIÓN
 			   <button class="btn btn-primary ml-2" type="submit" id="registrar_empresa"><div class="sb-nav-link-icon"></div><i class="fas fa-user-plus fa-lg"></i> Registrar Empresa</button>	  	  
 			</div> 	  	  
 			<div class="form-group">
-				<button class="btn btn-primary ml-2" type="submit" id="registrar_empresa"><div class="sb-nav-link-icon"></div><i class="fas fa-user-plus fa-lg"></i> Registrar Productos</button>	
+				<button class="btn btn-primary ml-2" type="submit" id="registrar_productos"><div class="sb-nav-link-icon"></div><i class="fas fa-user-plus fa-lg"></i> Registrar Productos</button>	
 			</div>				
 			</div>
    
@@ -162,6 +162,7 @@ $mysqli->close();//CERRAR CONEXIÓN
 		
 		include "../js/main.php"; 
 		include "../js/invoice.php"; 
+		include "../js/myjava_productos.php"; 
 		include "../js/myjava_admision.php"; 
 		include "../js/select.php"; 	
 		include "../js/functions.php"; 
