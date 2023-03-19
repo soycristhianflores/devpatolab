@@ -645,10 +645,15 @@ $('#formulario_facturacion #cobrar').on('click', function(e){
 	$("#formulario_facturacion").submit();
 });
 
+$('#acciones_atras').on('click', function(e){
+	e.preventDefault();
+	volver()
+});
+
 function volver(){
 	$('#main_facturacion').show();
 	$('#label_acciones_factura').html("");
-	$('#main_facturacion').hide();
+	$('#facturacion').hide();
 	$('#acciones_atras').addClass("breadcrumb-item active");
 	$('#acciones_factura').removeClass("active");
 	$('.footer').show();
@@ -671,7 +676,7 @@ function getFacturaEmision(muestras_id){
 	return disponible;
 }
 
-function createBill(muestras_id){
+function createBill(muestras_id, producto, nombre_producto, precio_venta, isv){
 	if (getUsuarioSistema() == 1 || getUsuarioSistema() == 2 || getUsuarioSistema() == 3){
 		if(getFacturaEmision(muestras_id) == ""){
 			$('#formulario_facturacion')[0].reset();
@@ -682,7 +687,7 @@ function createBill(muestras_id){
 				$.ajax({
 				type:'POST',
 				url:url,
-				data:'muestras_id='+muestras_id,
+				data:'muestras_id='+muestras_id+'&producto='+producto,
 				success: function(valores){
 					var datos = eval(valores);
 					$('#formulario_facturacion #muestras_id').val(muestras_id);
@@ -695,7 +700,7 @@ function createBill(muestras_id){
 					$('#formulario_facturacion #material_enviado_muestra').val(datos[6]);
 					$('#formulario_facturacion #paciente_muestra_codigo').val(datos[7]);
 					$('#formulario_facturacion #paciente_muestra').val(datos[8]);
-					$('#formulario_facturacion #muestras_numero').val(datos[9]);					
+					$('#formulario_facturacion #muestras_numero').val(datos[9]);
 
 					$('#formulario_facturacion #fecha').attr("readonly", true);
 					$('#formulario_facturacion #validar').attr("disabled", false);
@@ -720,6 +725,40 @@ function createBill(muestras_id){
 					$('#formulario_facturacion #fecha').attr('disabled', false);
 
 					limpiarTabla();
+
+					$('#formulario_facturacion #invoiceItem #productoID_0').val(producto);				
+					$('#formulario_facturacion #invoiceItem #productName_0').val(nombre_producto);					
+					$('#formulario_facturacion #invoiceItem #quantity_0').val(1);	
+					$('#formulario_facturacion #invoiceItem #price_0').val(precio_venta);
+					$('#formulario_facturacion #invoiceItem #discount_0').val(0);
+					$('#formulario_facturacion #invoiceItem #total_0').val(precio_venta);
+
+					var porcentaje_isv = 0;
+					var porcentaje_calculo = 0;
+
+					if(isv == 1){
+						porcentaje_isv = parseFloat(getPorcentajeISV("Facturas") / 100);
+						porcentaje_calculo = (parseFloat(precio_venta) * porcentaje_isv).toFixed(2);
+						$('#formulario_facturacion #invoiceItem #isv_0').val(isv);
+						$('#formulario_facturacion #invoiceItem #valor_isv_0').val(porcentaje_calculo);
+						$('#formulario_facturacion #taxAmount').val(porcentaje_calculo);
+					}else{
+						$('#formulario_facturacion #invoiceItem #isv_0').val(isv);
+						$('#formulario_facturacion #invoiceItem #valor_isv_0').val(0);
+						$('#formulario_facturacion #taxAmount').val(0);
+					}
+
+					var neto = (parseFloat(precio_venta) + porcentaje_calculo).toFixed(2)
+
+					$('#formulario_facturacion #subTotal').val(precio_venta);
+					$('#formulario_facturacion #taxAmount').val(porcentaje_calculo);
+					$('#formulario_facturacion #taxDescuento').val(0);
+					$('#formulario_facturacion #totalAftertax').val(neto);
+
+					$('#subTotalFooter').val(precio_venta);
+					$('#taxAmountFooter').val(porcentaje_calculo);
+					$('#taxDescuentoFooter').val(0);
+					$('#totalAftertaxFooter').val(neto);
 
 					$('#main_facturacion').hide();
 					$('#label_acciones_factura').html("Factura");

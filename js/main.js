@@ -178,7 +178,7 @@ $('.FormularioAjax').submit(function(e){
 				
 				if (datos[6] == "formPacientesAdmision"){					
 					//printMuestra(datos[10]); //LLAMAMOS LA FUNCION PARA IMPRIMIR LA FACTURA .-Función se encuenta en myjava_muestras.js
-					createBill(datos[10]);//LLAMAMOS LA FACTURA .-Función se encuenta en myjava_atencioN_medica.js
+					createBill(datos[10], datos[11], datos[12], datos[13], datos[14]);//LLAMAMOS LA FACTURA .-Función se encuenta en myjava_atencioN_medica.js
 				}				
 				
 				
