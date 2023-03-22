@@ -2445,6 +2445,7 @@
 						DATOS DE LA EMPRESA
 					</div>
 					<div class="card-body">
+					    <input type="hidden" required id="pacientes_id" name="pacientes_id" placeholder="Empresa" class="form-control"/>
 						<div class="form-row">
 							<div class="col-md-8 mb-3">
 								<label for="name">Empresa <span class="priority">*<span/></label>
@@ -2485,7 +2486,6 @@
 		<div class="modal-footer">
 			<button class="guardar btn btn-primary ml-2" type="submit" id="reg_admisionemp" form="formulario_admision_empresas"><div class="sb-nav-link-icon"></div><i class="far fa-save fa-lg"></i> Registrar</button>
 			<button class="editar btn btn-warning ml-2" type="submit" id="edi_admisionemp" form="formulario_admision_empresas"><div class="sb-nav-link-icon"></div><i class="fas fa-edit fa-lg"></i> Editar</button>
-			<button class="eliminar btn btn-danger ml-2" type="submit" id="delete_admisionemp" form="formulario_admision_empresas"><div class="sb-nav-link-icon"></div><i class="fa fa-trash fa-lg"></i> Eliminar</button>
 		</div>			
       </div>
     </div>

@@ -215,8 +215,14 @@ if($query){
 		$number .= $sufijo;
 	}	
 
+	$pacientes_id_muestra = $pacientes_id;
+
+	if($empresa != 0){
+		$pacientes_id_muestra = $empresa;
+	}
+
 	$muestras_id  = correlativo('muestras_id', 'muestras');
-	$insert = "INSERT INTO muestras			VALUES('$muestras_id','$pacientes_id','$secuencias_id','$servicio_id','$usuario','$tipo_muestra_id','$number','$referencia','$fecha','$estado_muestra','$sitio_muestra','$diagnostico_clinico','$material_enviado','$datos_clinicos','$mostrar_datos_clinicos','$hospital_clinica','$categoria_muestras','$usuario','$fecha_registro')";
+	$insert = "INSERT INTO muestras			VALUES('$muestras_id','$pacientes_id_muestra','$secuencias_id','$servicio_id','$usuario','$tipo_muestra_id','$number','$referencia','$fecha','$estado_muestra','$sitio_muestra','$diagnostico_clinico','$material_enviado','$datos_clinicos','$mostrar_datos_clinicos','$hospital_clinica','$categoria_muestras','$usuario','$fecha_registro')";
 	$mysqli->query($insert) or die($mysqli->error);
 	
 	if($flag){

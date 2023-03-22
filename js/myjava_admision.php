@@ -1,5 +1,6 @@
 <script>
 $(document).ready(function(){
+	pagination(1);
 	getEstado(); 
 	getGenero();
 	getTipo();
@@ -451,16 +452,18 @@ function modal_eliminar(pacientes_id){
 }
 
 function editarRegistro(pacientes_id){
-	if (getUsuarioSistema() == 1 || getUsuarioSistema() == 2 || getUsuarioSistema() == 3){
-		if($('#form_main_admision #tipo').val() == 1 || $('#form_main_admision #tipo').val() == ""){
-			var url = '<?php echo SERVERURL; ?>php/admision/consultarClientes.php';
+	if (getUsuarioSistema() == 1 || getUsuarioSistema() == 2 || getUsuarioSistema() == 3){		
+		var url = '<?php echo SERVERURL; ?>php/admision/consultarClientes.php';
 
-			$.ajax({
-				type:'POST',
-				url:url,
-				data:'pacientes_id='+pacientes_id,
-				success: function(valores){
-					var datos = eval(valores);
+		$.ajax({
+			type:'POST',
+			url:url,
+			data:'pacientes_id='+pacientes_id,
+			success: function(valores){
+				var datos = eval(valores);
+
+				if($('#form_main_admision #tipo').val() == 1 || $('#form_main_admision #tipo').val() == "")
+				{
 					$('#formulario_admision_clientes_editar #edi_admision').show();	
 					$('#formulario_admision_clientes_editar #pacientes_id').val(pacientes_id);					
 					$('#formulario_admision_clientes_editar #name').val(datos[0]);
@@ -493,12 +496,38 @@ function editarRegistro(pacientes_id){
 						keyboard: false,
 						backdrop:'static'
 					});
-					return false;
-				}
-			});	
-		}else{
+				}else{
+					$('#reg_admisionemp').hide();
+					$('#edi_admisionemp').show();	
+					$('#formulario_admision_empresas #pacientes_id').val(pacientes_id);					
+					$('#formulario_admision_empresas #empresa').val(datos[0]);
+					$('#formulario_admision_empresas #rtn').val(datos[2]);
+					$('#formulario_admision_empresas #edad').val(datos[3]);
+					$('#formulario_admision_empresas #telefono1').val(datos[4]);
+					$('#formulario_admision_empresas #direccion').val(datos[6]);
+					$('#formulario_admision_empresas #correo').val(datos[7]);						
 
-		}
+					$('#formulario_admision_empresas').attr({ 'data-form': 'update' }); 
+					$('#formulario_admision_empresas').attr({ 'action': '<?php echo SERVERURL; ?>php/admision/modificarrRegistroEmpresas.php' });						
+					
+					//HABILITAR OBJETOS
+					$('#formulario_admision_empresas #name').attr('readonly', false);
+					$('#formulario_admision_empresas #rtn').attr('readonly', false);
+					$('#formulario_admision_empresas #telefono1').attr('readonly', false);
+					$('#formulario_admision_empresas #direccion').attr('readonly', false);
+					$('#formulario_admision_empresas #correo').attr('readonly', false);
+
+					$('#modal_admision_empesas').modal({
+						show:true,
+						keyboard: false,
+						backdrop:'static'
+					});
+				}
+
+				
+				return false;
+			}
+		});	
 	}else{
 		swal({
 			title: 'Acceso Denegado', 
@@ -526,6 +555,57 @@ function modalEditar(pacientes_id){
 	$('#formulario_admision #hospital').selectpicker('refresh');	
 
 
+}
+
+function showModalhistoriaMuestrasEmpresas(pacientes_id, tipo){	
+	$('#modal_historico_muestras #pacientes_id_muestras').val(pacientes_id);
+	$('#modal_historico_muestras').modal({
+		show:true,
+		keyboard: false,
+		backdrop:'static'
+	});	
+
+	if(tipo == 1){
+		historiaMuestrasPacientes(1);
+	}else{
+		historiaMuestrasEmpresas(1);
+	}	
+}
+
+function historiaMuestrasEmpresas(partida){
+	var url = '<?php echo SERVERURL; ?>php/admision/paginar_historico_muestras_empresas.php';
+	var pacientes_id = $('#modal_historico_muestras #pacientes_id_muestras').val();
+
+	$.ajax({
+		type:'POST',
+		url:url,
+		async: true,
+		data:'partida='+partida+'&pacientes_id='+pacientes_id,
+		success:function(data){
+			var array = eval(data);
+			$('#detalles-historico-muestras').html(array[0]);
+			$('#pagination-historico-muestras').html(array[1]);
+		}
+	});
+	return false;
+}
+
+function historiaMuestrasPacientes(partida){
+	var url = '<?php echo SERVERURL; ?>php/admision/paginar_historico_muestras_pacientes.php';
+	var pacientes_id = $('#modal_historico_muestras #pacientes_id_muestras').val();
+
+	$.ajax({
+		type:'POST',
+		url:url,
+		async: true,
+		data:'partida='+partida+'&pacientes_id='+pacientes_id,
+		success:function(data){
+			var array = eval(data);
+			$('#detalles-historico-muestras').html(array[0]);
+			$('#pagination-historico-muestras').html(array[1]);
+		}
+	});
+	return false;
 }
 
 function modalClientes(){
@@ -562,6 +642,8 @@ function modalClientes(){
 	$('#formulario_admision #material_enviado').attr('readonly', false);
     $('#formulario_admision #datos_clinicos').attr('readonly', false);
     $('#formulario_admision #mostrar_datos_clinicos').attr('disabled', false);
+	getClientesAdmision();
+	getEmpresa();
 
 	$('#modal_admision_clientes').modal({
 		show:true,
@@ -578,6 +660,16 @@ $('#form_main_admision #registrar_empresa').on('click', function(e){
 $('#formulario_admision #add_empresa').on('click', function(e){
 	e.preventDefault();
 	modaEmpresa();
+});
+
+$('#form_main_admision #ver_muestras').on('click', function(e){
+	e.preventDefault();
+	swal({
+		title: "Desarrollo",
+		text: "Lo sentimos esta función se encuentra en desarrollo",
+		type: "warning",
+		confirmButtonClass: 'btn-warning'
+	});
 });
 
 function modaEmpresa(){
@@ -620,7 +712,7 @@ function convertDate(inputFormat) {
 function formFactura(){
 	 $('#formulario_facturacion')[0].reset();
 	 $('#main_facturacion').hide();
-	 $('#main_facturacion').show();
+	 $('#facturacion').show();
 	 $('#label_acciones_volver').html("Volver");
 	 $('#acciones_atras').removeClass("active");
 	 $('#acciones_factura').addClass("active");
@@ -629,6 +721,19 @@ function formFactura(){
 	 $('#formulario_facturacion').attr({ 'data-form': 'save' });
 	 $('#formulario_facturacion').attr({ 'action': '<?php echo SERVERURL; ?>php/facturacion/addPreFactura.php' });
 	 limpiarTabla();
+	 $('.footer').show();
+     $('.footer1').hide();	 
+}
+
+function ModalVerMas(){
+	 $('#main_facturacion').hide();
+	 $('#facturacion').hide();
+	 $('#main_admision_muestras').show();
+	 $('#form_main_admision_muestras')[0].reset();
+	 $('#label_acciones_volver').html("Volver");
+	 $('#acciones_atras').removeClass("active");
+	 $('#acciones_factura').addClass("active");
+	 $('#label_acciones_factura').html("Muestras");
 	 $('.footer').show();
      $('.footer1').hide();	 
 }
@@ -659,6 +764,7 @@ function volver(){
 	$('#main_facturacion').show();
 	$('#label_acciones_factura').html("");
 	$('#facturacion').hide();
+	$('#main_muestras').hide();
 	$('#acciones_atras').addClass("breadcrumb-item active");
 	$('#acciones_factura').removeClass("active");
 	$('.footer').show();

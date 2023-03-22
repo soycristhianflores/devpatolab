@@ -12,14 +12,10 @@ $pacientes_id = $_POST['pacientes_id'];
 $where = "WHERE m.pacientes_id= '$pacientes_id'";
 
 $query = "SELECT p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre, ' ', p.apellido) AS paciente, m.fecha AS 'fecha', m.diagnostico_clinico AS 'diagnostico_clinico', m.material_eviando As 'material_eviando', m.datos_clinico As 'datos_clinico',
-(CASE WHEN m.estado = '1' THEN 'Atendido' ELSE 'Pendiente' END) AS 'estatus', m.muestras_id  As 'muestras_id', m.mostrar_datos_clinicos As 'mostrar_datos_clinicos', m.number AS 'numero', CONCAT(p1.nombre, ' ', p1.apellido) As 'paciente'
+(CASE WHEN m.estado = '1' THEN 'Atendido' ELSE 'Pendiente' END) AS 'estatus', m.muestras_id  As 'muestras_id', m.mostrar_datos_clinicos As 'mostrar_datos_clinicos', m.number AS 'numero'
 	FROM muestras AS m
 	INNER JOIN pacientes AS p
 	ON m.pacientes_id = p.pacientes_id
-	INNER JOIN pacientes AS p1
-	ON m.pacientes_id = p1.pacientes_id	
-	INNER JOIN muestras_hospitales AS mh
-	ON mh.pacientes_id = p1.pacientes_id	
 	".$where."
 	ORDER BY m.fecha DESC";	
 $result = $mysqli->query($query) or die($mysqli->error);
@@ -52,15 +48,11 @@ if($paginaActual <= 1){
 	$limit = $nroLotes*($paginaActual-1);
 }
 
-$registro = "SELECT p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre, ' ', p.apellido) As empresa, m.fecha AS 'fecha', m.diagnostico_clinico AS 'diagnostico_clinico', m.material_eviando As 'material_eviando', m.datos_clinico As 'datos_clinico',
-(CASE WHEN m.estado = '1' THEN 'Atendido' ELSE 'Pendiente' END) AS 'estatus', m.muestras_id  As 'muestras_id', m.mostrar_datos_clinicos As 'mostrar_datos_clinicos', m.number AS 'numero', CONCAT(p1.nombre, ' ', p1.apellido) As 'paciente'
+$registro = "SELECT p.pacientes_id AS 'pacientes_id', CONCAT(p.nombre, ' ', p.apellido) As paciente, m.fecha AS 'fecha', m.diagnostico_clinico AS 'diagnostico_clinico', m.material_eviando As 'material_eviando', m.datos_clinico As 'datos_clinico',
+(CASE WHEN m.estado = '1' THEN 'Atendido' ELSE 'Pendiente' END) AS 'estatus', m.muestras_id  As 'muestras_id', m.mostrar_datos_clinicos As 'mostrar_datos_clinicos', m.number AS 'numero'
 	FROM muestras AS m
 	INNER JOIN pacientes AS p
 	ON m.pacientes_id = p.pacientes_id
-	INNER JOIN pacientes AS p1
-	ON m.pacientes_id = p1.pacientes_id	
-	INNER JOIN muestras_hospitales AS mh
-	ON mh.pacientes_id = p1.pacientes_id
 	".$where."
 	ORDER BY m.fecha DESC
 	LIMIT $limit, $nroLotes";
@@ -79,7 +71,46 @@ $tabla = $tabla.'<table class="table table-striped table-condensed table-hover">
 			</tr>';
 $i = 1;				
 while($registro2 = $result->fetch_assoc()){ 
-    $empresa = $registro2['paciente']." (<b>Paciente:</b> ".$registro2['paciente'].")";
+	$muestras_id = $registro2['muestras_id'];
+	//CONSULTAR EL PACIENTE SI ES ENVIADO POR UNA EMPRESA O CLINICA
+	$query_paciente = "SELECT p.pacientes_id, CONCAT(p.nombre, ' ', p.apellido) As 'paciente'
+		FROM muestras_hospitales AS mh
+		INNER JOIN pacientes AS p
+		ON mh.pacientes_id = p.pacientes_id
+		WHERE mh.muestras_id = '$muestras_id'";
+	$result_paciente = $mysqli->query($query_paciente) or die($mysqli->error);
+
+	$pacientes_id_cliente_codigo = "";
+	$pacientes_id_cliente = "";
+
+	if($result_paciente->num_rows>0){	
+		$valores_paciente = $result_paciente->fetch_assoc();
+		$pacientes_id_cliente_codigo = $valores_paciente['pacientes_id'];
+		$pacientes_id_cliente = $valores_paciente['paciente'];	
+	}
+	
+	$empresa = "";
+	
+	if($pacientes_id_cliente == ""){
+		$empresa = $registro2['paciente'];
+	}else{
+		$empresa = $registro2['paciente']." (<b>Paciente:</b> ".$pacientes_id_cliente.")";
+	}
+
+	//CONSULTAMOS SI LA MUESTRA ESTA EN LA Factura
+	$consulta_muestra_fact = "SELECT muestras_id
+		FROM facturas
+		WHERE muestras_id = '$muestras_id'";
+	$result_muestra_fact = $mysqli->query($consulta_muestra_fact) or die($mysqli->error);
+
+	$factura_muestra = "";
+	$title_factura = "";
+
+	if($result_muestra_fact->num_rows>0){
+		$factura_muestra = "Generada";
+		$title_factura = "Esta factura ya ha sido generada, verifique en el módulo de facturación para emitir el pago";
+	}	
+	
 	$tabla = $tabla.'<tr>
 			<td>'.$i.'</td> 
 			<td>'.$registro2['fecha'].'</td>	
