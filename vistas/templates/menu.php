@@ -80,7 +80,7 @@
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/admision.php">Admision</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/pacientes.php">Clientes</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/citas.php">Calendario</a>
-		      <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/hospitales.php">Hospitales</a>
+		  <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/hospitales.php">Hospitales</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/muestras.php">Muestras</a>
           <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/facturacion.php">Facturación</a>
         </div>

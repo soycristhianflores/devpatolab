@@ -2160,6 +2160,12 @@
 					<div class="card-body">
 						<div class="form-row">
 							<div class="col-md-3 mb-3">
+								<button class="nuevo btn btn-dark ml-2" type="submit" id="nuevo_admision"><div class="sb-nav-link-icon"></div><i class="fas fa-file fa-lg"></i> Nuevo</button>	
+							</div>							
+						</div>
+						
+						<div class="form-row">
+							<div class="col-md-3 mb-3">
 								<label for="cliente_admision">Cliente</label>			
 								<div class="input-group mb-3">
 									<select class="selectpicker" id="cliente_admision" name="cliente_admision" data-live-search="true" title="Cliente" data-size="10">			  
@@ -2226,6 +2232,11 @@
 						DATOS DE LA MUESTRA
 					</div>
 					<div class="card-body">
+						<div class="form-row">
+							<div class="col-md-3 mb-3">
+								<button class="nuevo btn btn-dark ml-2" type="submit" id="nuevo_admision_muestra"><div class="sb-nav-link-icon"></div><i class="fas fa-file fa-lg"></i> Nuevo</button>	
+							</div>							
+						</div>					
 						<div class="form-row">				
 							<div class="col-md-4 mb-3">
 								<label for="empresa">Empresa</label>
@@ -2244,7 +2255,7 @@
 									</select>
 								</div>
 							</div>										
-							<div class="col-md-3 mb-3" style=display:none;">
+							<div class="col-md-3 mb-3" style="display:none;">
 							  <label for="referencia">Referencia</label>
 							  <input type="text" id="referencia" name="referencia" class="form-control" placeholder="Referencia" />
 							</div>	
@@ -2360,7 +2371,7 @@
 					<div class="card-header text-white bg-info mb-3" align="center">
 						DATOS DEL CLIENTE
 					</div>
-					<div class="card-body">
+					<div class="card-body">				
 						<div class="form-row">
 							<input type="hidden" required id="pacientes_id" name="pacientes_id" class="form-control"/>
 							<div class="col-md-6 mb-3">
@@ -2445,6 +2456,12 @@
 						DATOS DE LA EMPRESA
 					</div>
 					<div class="card-body">
+						<div class="form-row">
+							<div class="col-md-3 mb-3">
+								<button class="nuevo btn btn-dark ml-2" type="submit" id="nuevo_admision_empresa"><div class="sb-nav-link-icon"></div><i class="fas fa-file fa-lg"></i> Nuevo</button>	
+							</div>							
+						</div>
+						
 					    <input type="hidden" required id="pacientes_id" name="pacientes_id" placeholder="Empresa" class="form-control"/>
 						<div class="form-row">
 							<div class="col-md-8 mb-3">

@@ -116,7 +116,6 @@ function getClientesAdmision(){
    return false;
 }
 
-
 function getEmpresa(){
   var url = '<?php echo SERVERURL; ?>php/admision/getEmpresa.php';
   $.ajax({
@@ -311,6 +310,46 @@ function pagination(partida){
 $('#form_main_admision #registrar_cliente').on('click', function(e){
 	e.preventDefault();
 	modalClientes();
+});
+
+$('#formulario_admision #nuevo_admision').on('click', function(e){
+	e.preventDefault();	
+	$('#formulario_admision #name').val("");
+	$('#formulario_admision #lastname').val("");
+	$('#formulario_admision #rtn').val(0);
+	$('#formulario_admision #telefono1').val("");
+	$('#formulario_admision #direccion').val("");
+	$('#formulario_admision #correo').val("");
+	getClientesAdmision();
+	getGenero();
+	$('#formulario_admision #name').focus();
+});
+
+$('#formulario_admision_empresas #nuevo_admision_empresa').on('click', function(e){
+	e.preventDefault();	
+	$('#formulario_admision_empresas #empresa').val("");
+	$('#formulario_admision_empresas #rtn').val(0);
+	$('#formulario_admision_empresas #telefono1').val("");
+	$('#formulario_admision_empresas #direccion').val("");
+	$('#formulario_admision_empresas #correo').val("");
+	$('#formulario_admision_empresas #empresa').focus();
+});
+
+$('#formulario_admision #nuevo_admision_muestra').on('click', function(e){
+	e.preventDefault();	
+	$('#formulario_admision #sitio_muestra').val("");
+	$('#formulario_admision #diagnostico_clinico').val("");
+	$('#formulario_admision #material_enviado').val("");
+	$('#formulario_admision #datos_clinicos').val("");
+
+	$('#formulario_admision #producto').html("");
+	$('#formulario_admision #producto').selectpicker('refresh');
+
+	getEmpresa();
+	getRemitente();
+	getHospitales();
+	getTipoMuestra();
+	getCategorias();
 });
 
 function consultarExpediente(pacientes_id){	
@@ -524,7 +563,6 @@ function editarRegistro(pacientes_id){
 					});
 				}
 
-				
 				return false;
 			}
 		});	

@@ -588,17 +588,16 @@ $mysqli->close();//CERRAR CONEXIÓN
 	<?php include("templates/footer.php"); ?>	
 </div>
 
-    <!-- add javascripts -->
-	<?php include("script.php"); ?>	<?php 
+    <!-- add javascripts -->	
+	<?php 
 		include "script.php"; 
 		
 		include "../js/main.php"; 
 		include "../js/invoice.php"; 
-		include "../js/myjava_atencion_medica.php"; 		
+		include "../js/myjava_atencion_medica.php"; 
 		include "../js/select.php"; 	
 		include "../js/functions.php"; 
 		include "../js/myjava_cambiar_pass.php"; 		
 	?>	
-	  
 </body>
 </html>
