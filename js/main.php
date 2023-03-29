@@ -1211,7 +1211,7 @@ function convertDateFormat(string) {
 }
 
 var listar_secuencia_fiscales_dashboard = function(){
-	var table_categoria_productos  = $("#dataTableSecuenciaDashboard").DataTable({
+	var table_secuencia_fiscales_dashboard  = $("#dataTableSecuenciaDashboard").DataTable({
 		"destroy":true,
 		"ajax":{
 			"method":"POST",
@@ -1284,7 +1284,7 @@ var listar_secuencia_fiscales_dashboard = function(){
 			}
 		],
 	});
-	table_categoria_productos.search('').draw();
+	table_secuencia_fiscales_dashboard.search('').draw();
 	$('#buscar').focus();
 }
 </script>
