@@ -14,7 +14,6 @@ $dato = $_POST['dato'];
 $profesional = $_POST['profesional'];
 $estado = $_POST['estado'];
 $usuario = $_SESSION['colaborador_id'];
-$type = $_SESSION['type'];
 
 if($estado == 1){
    $in = "IN(2,4)";

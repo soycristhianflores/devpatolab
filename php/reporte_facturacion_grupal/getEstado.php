@@ -1,7 +1,7 @@
 <?php
 echo "
-  <option value=''>Seleccione</option>
-	<option value='2'>Pagadas</option> 	
-	<option value='3'>Canceladas</option> 		
+  <option value='1'>Activas</option> 	
+  <option value='2'>Canceladas</option> 		
+  <option value='4'>Crédito</option>	
   ";
 ?>

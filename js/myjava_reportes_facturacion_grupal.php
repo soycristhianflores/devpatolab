@@ -472,7 +472,7 @@ function convertDate(inputFormat) {
 
 //INICIO FUNCION PARA OBTENER LOS BANCOS DISPONIBLES	
 function getEstado(){
-    var url = '<?php echo SERVERURL; ?>php/facturacion/getEstado.php';		
+    var url = '<?php echo SERVERURL; ?>php/reporte_facturacion_grupal/getEstado.php';		
 		
 	$.ajax({
         type: "POST",
