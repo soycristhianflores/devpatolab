@@ -30,10 +30,10 @@
       <li class="nav-item dropdown active">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-chart-bar fa-lg"></i>&nbsp;Reportes</a>
         <div class="dropdown-menu" aria-labelledby="dropdown05">
-          <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/reporte_facturacion.php">Reporte de Facturación</a>
-		  <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/reporte_pagos.php">Reporte de Pagos</a>
-          <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/reporte_facturacion_grupal.php">Reporte de Facturación Grupal</a>
-		  <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/reportes_muestras.php">Reporte de Muestras</a>
+        <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/reporte_facturacion.php">Reporte de Facturación</a>
+		     <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/reporte_pagos.php">Reporte de Pagos</a>
+         <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/reporte_facturacion_grupal.php">Reporte de Facturación Grupal</a>
+		     <a class="dropdown-item" href="<?php echo SERVERURL; ?>vistas/reportes_muestras.php">Reporte de Muestras</a>
         </div>
       </li>
       <?php

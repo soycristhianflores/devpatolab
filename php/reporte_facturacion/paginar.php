@@ -159,7 +159,6 @@ while($registro2 = $result->fetch_assoc()){
 		$cierre_ = '<a style="text-decoration:none; pointer-events: none; cursor: default;" data-toggle="tooltip" data-placement="right" href="#" class="fas fa-check fa-lg" title="No se ha cerrado la factura"></a>';		
 	}
 	
-	
 	$tabla = $tabla.'<tr>
 			<td>'.$i.'</td> 
 			<td>'.$registro2['tipo_documento'].'</td>
