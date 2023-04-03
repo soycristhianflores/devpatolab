@@ -191,11 +191,11 @@ while($registro2 = $result->fetch_assoc()){
 
 if($nroProductos == 0){
 	$tabla = $tabla.'<tr>
-	   <td colspan="15" style="color:#C7030D">No se encontraron resultados, seleccione un profesional para verificar si hay registros almacenados</td>
+	   <td colspan="16" style="color:#C7030D">No se encontraron resultados, seleccione un profesional para verificar si hay registros almacenados</td>
 	</tr>';		
 }else{
    $tabla = $tabla.'<tr>
-	  <td colspan="15"><b><p ALIGN="center">Total de Registros Encontrados: '.$nroProductos.'</p></b>
+	  <td colspan="16"><b><p ALIGN="center">Total de Registros Encontrados: '.$nroProductos.'</p></b>
    </tr>';		
 }        
 
