@@ -27,7 +27,7 @@ if($type == 1 || $type == 2 || $type == 4){//SUPER ADMINISTRADOR, ADMINISTRADOR 
 	if($profesional != ""){
 		$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.colaborador_id = '$profesional' AND f.estado ".$in;
 	}else if($dato != ""){
-		$where = "WHERE f.estado ".$in." AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%')";
+		$where = "WHERE f.estado ".$in." AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%' OR m.number LIKE '$dato%')";
 	}else{
 		$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.estado ".$in;
 	}
@@ -35,13 +35,13 @@ if($type == 1 || $type == 2 || $type == 4){//SUPER ADMINISTRADOR, ADMINISTRADOR 
 	if($profesional != ""){
 		$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.colaborador_id = '$profesional' AND f.estado ".$in." AND f.usuario = '$usuario'";
 	}else if($dato != ""){
-		$where = "WHERE f.estado ".$in." AND f.usuario = '$usuario' AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%')";
+		$where = "WHERE f.estado ".$in." AND f.usuario = '$usuario' AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%' OR m.number LIKE '$dato%')";
 	}else{
 		$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.estado ".$in." AND f.usuario = '$usuario'";
 	}
 }
 
-$query = "SELECT f.facturaS_id AS 'factura_id', f.fecha AS 'fecha', p.identidad AS 'identidad', CONCAT(p.nombre,' ',p.apellido) AS 'paciente', sc.prefijo AS 'prefijo', f.number AS 'numero', s.nombre AS 'servicio', CONCAT(c.nombre,'',c.apellido) AS 'profesional', sc.relleno AS 'relleno', DATE_FORMAT(f.fecha, '%d/%m/%Y') AS 'fecha1', f.pacientes_id AS 'pacientes_id', f.cierre AS 'cierre', (CASE WHEN f.tipo_factura = 1 THEN 'Contado' ELSE 'Crédito' END) AS 'tipo_documento', f.tipo_factura
+$query = "SELECT f.facturaS_id AS 'factura_id', f.fecha AS 'fecha', p.identidad AS 'identidad', CONCAT(p.nombre,' ',p.apellido) AS 'paciente', sc.prefijo AS 'prefijo', f.number AS 'numero', s.nombre AS 'servicio', CONCAT(c.nombre,'',c.apellido) AS 'profesional', sc.relleno AS 'relleno', DATE_FORMAT(f.fecha, '%d/%m/%Y') AS 'fecha1', f.pacientes_id AS 'pacientes_id', f.cierre AS 'cierre', (CASE WHEN f.tipo_factura = 1 THEN 'Contado' ELSE 'Crédito' END) AS 'tipo_documento', f.tipo_factura, m.number AS 'muestra'
 	FROM facturas AS f
 	INNER JOIN pacientes AS p
 	ON f.pacientes_id = p.pacientes_id
@@ -51,6 +51,8 @@ $query = "SELECT f.facturaS_id AS 'factura_id', f.fecha AS 'fecha', p.identidad 
 	ON f.servicio_id = s.servicio_id
 	INNER JOIN colaboradores AS c
 	ON f.colaborador_id = c.colaborador_id
+	INNER JOIN muestras AS m
+    ON f.muestras_id = m.muestras_id		
 	".$where."
 	ORDER BY f.number DESC";
 $result = $mysqli->query($query) or die($mysqli->error);
@@ -83,7 +85,7 @@ if($paginaActual <= 1){
 	$limit = $nroLotes*($paginaActual-1);
 }
 
-$registro = "SELECT f.facturas_id AS 'facturas_id', f.fecha AS 'fecha', p.identidad AS 'identidad', CONCAT(p.nombre,' ',p.apellido) AS 'paciente', sc.prefijo AS 'prefijo', f.number AS 'numero', s.nombre AS 'servicio', CONCAT(c.nombre,' ',c.apellido) AS 'profesional', sc.relleno AS 'relleno', DATE_FORMAT(f.fecha, '%d/%m/%Y') AS 'fecha1', f.pacientes_id AS 'pacientes_id', f.cierre AS 'cierre', (CASE WHEN f.tipo_factura = 1 THEN 'Contado' ELSE 'Crédito' END) AS 'tipo_documento', f.tipo_factura
+$registro = "SELECT f.facturas_id AS 'facturas_id', f.fecha AS 'fecha', p.identidad AS 'identidad', CONCAT(p.nombre,' ',p.apellido) AS 'paciente', sc.prefijo AS 'prefijo', f.number AS 'numero', s.nombre AS 'servicio', CONCAT(c.nombre,' ',c.apellido) AS 'profesional', sc.relleno AS 'relleno', DATE_FORMAT(f.fecha, '%d/%m/%Y') AS 'fecha1', f.pacientes_id AS 'pacientes_id', f.cierre AS 'cierre', (CASE WHEN f.tipo_factura = 1 THEN 'Contado' ELSE 'Crédito' END) AS 'tipo_documento', f.tipo_factura, m.number AS 'muestra'
 	FROM facturas AS f
 	INNER JOIN pacientes AS p
 	ON f.pacientes_id = p.pacientes_id
@@ -93,6 +95,8 @@ $registro = "SELECT f.facturas_id AS 'facturas_id', f.fecha AS 'fecha', p.identi
 	ON f.servicio_id = s.servicio_id
 	INNER JOIN colaboradores AS c
 	ON f.colaborador_id = c.colaborador_id
+	INNER JOIN muestras AS m
+    ON f.muestras_id = m.muestras_id	
 	".$where."
 	ORDER BY f.number DESC
 	LIMIT $limit, $nroLotes";
@@ -103,6 +107,7 @@ $tabla = $tabla.'<table class="table table-striped table-condensed table-hover">
 			<th width="2.66%">No.</th>
 			<th width="6.66%">Factura</th>
 			<th width="6.66%">Fecha</th>
+			<th width="10.14%">Muestra</th>
 			<th width="6.66%">Identidad</th>
 			<th width="10.66%">Paciente</th>			
 			<th width="13.66%">Número</th>
@@ -163,6 +168,7 @@ while($registro2 = $result->fetch_assoc()){
 			<td>'.$i.'</td> 
 			<td>'.$registro2['tipo_documento'].'</td>
 			<td><a style="text-decoration:none" href="javascript:invoicesDetails('.$registro2['facturas_id'].');">'.$registro2['fecha1'].'</a></td>	
+			<td>'.$registro2['muestra'].'</td>
 			<td>'.$registro2['identidad'].'</td>
 			<td>'.$registro2['paciente'].'</td>				
 			<td>'.$numero.'</td>
