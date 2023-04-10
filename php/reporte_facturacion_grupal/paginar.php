@@ -52,6 +52,7 @@ $query = "SELECT f.facturas_grupal_id AS 'factura_id', f.fecha AS 'fecha', p.ide
 	ON f.colaborador_id = c.colaborador_id
 	".$where."
 	ORDER BY f.number DESC";
+	echo $query;
 $result = $mysqli->query($query) or die($mysqli->error);
 
 $nroLotes = 25;
