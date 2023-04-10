@@ -26,7 +26,7 @@ if($type == 1 || $type == 2 || $type == 4){//SUPER ADMINISTRADOR, ADMINISTRADOR 
 	if($profesional != ""){
 		$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.colaborador_id = '$profesional' AND f.estado ".$in;
 	}else if($dato != ""){
-		$where = "WHERE f.estado ".$in." AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%')";
+		$where = "WHERE f.estado ".$in." AND f.fecha BETWEEN '$fechai' AND '$fechaf' AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%')";
 	}else{
 		$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.estado ".$in;
 	}
@@ -34,7 +34,7 @@ if($type == 1 || $type == 2 || $type == 4){//SUPER ADMINISTRADOR, ADMINISTRADOR 
 	if($profesional != ""){
 		$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.colaborador_id = '$profesional' AND f.estado ".$in." AND f.usuario = '$usuario'";
 	}else if($dato != ""){
-		$where = "WHERE f.estado ".$in." AND f.usuario = '$usuario' AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%')";
+		$where = "WHERE f.estado ".$in." AND f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.usuario = '$usuario' AND (CONCAT(p.nombre,' ',p.apellido) LIKE '%$dato%' OR p.apellido LIKE '$dato%' OR p.identidad LIKE '$dato%' OR f.number LIKE '$dato%')";
 	}else{
 		$where = "WHERE f.fecha BETWEEN '$fechai' AND '$fechaf' AND f.estado ".$in." AND f.usuario = '$usuario'";
 	}
