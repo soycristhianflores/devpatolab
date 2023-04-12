@@ -52,6 +52,7 @@ $query = "SELECT f.facturas_grupal_id AS 'factura_id', f.fecha AS 'fecha', p.ide
 	ON f.colaborador_id = c.colaborador_id
 	".$where."
 	ORDER BY f.number DESC";
+	echo $query;
 $result = $mysqli->query($query) or die($mysqli->error);
 
 $nroLotes = 25;
@@ -95,6 +96,7 @@ $registro = "SELECT f.facturas_grupal_id AS 'facturas_id', f.fecha AS 'fecha', p
 	".$where."
 	ORDER BY f.number DESC
 	LIMIT $limit, $nroLotes";
+	echo $registro;
 $result = $mysqli->query($registro) or die($mysqli->error);
 
 $tabla = $tabla.'<table class="table table-striped table-condensed table-hover">
@@ -123,6 +125,7 @@ while($registro2 = $result->fetch_assoc()){
 	$query_detalle = "SELECT importe, descuento, cantidad, isv_valor
 		FROM facturas_grupal_detalle
 		WHERE facturas_grupal_id = '$facturas_id'";
+		echo $query_detalle;
 	$result_detalles = $mysqli->query($query_detalle) or die($mysqli->error);
 	
 	$cantidad = 0;
@@ -198,7 +201,7 @@ $tabla = $tabla.'</table>';
 $array = array(0 => $tabla,
 			   1 => $lista);
 
-echo json_encode($array);
+ json_encode($array);
 
 $result->free();//LIMPIAR RESULTADO
 $mysqli->close();//CERRAR CONEXIÓN	
